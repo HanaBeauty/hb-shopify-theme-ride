@@ -1,0 +1,41 @@
+{% if preco < 3000 %}
+  <p class="parcelamento" style="font-size:14px; line-height: 1.5;">
+    à vista por <span style="font-size:18px; color: black;"><b>{{ preco | money }}</b></span><br>
+    e ganhe 
+    <span class="parcelamento-pontos">
+      <b style="color: #ec008c;">{{ pontos }} pontos</b>
+      <span class="tooltip">
+        ❔
+        <span class="tooltip-text">
+          Os pontos podem ser trocados por descontos exclusivos.<br>
+          <a href="/pages/clube-da-hana" target="_blank">Saiba mais</a>
+        </span>
+      </span>
+    </span>
+  </p>
+{% elsif preco < 10000 %}
+  <!-- Repete os mesmos blocos com mesma estrutura -->
+  <p class="parcelamento" style="font-size:14px; line-height: 1.5;">
+    Pague em até <b>2x</b> sem juros de <span style="font-size:18px; color: black;"><b>{{ preco | divided_by: 2 | money }}</b></span><br>
+    e ganhe 
+   <span class="parcelamento-pontos">
+  <b style="color: #ec008c;">{{ pontos }} pontos</b>
+  <span class="tooltip" onclick="event.stopPropagation();">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#ec008c" viewBox="0 0 24 24" style="margin-left: 4px;">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.75 17h-1.5v-1.5h1.5V19zm1.57-7.88c-.6.55-1.07 1-1.07 2.38h-1.5v-.5c0-1.28.45-1.93 1.07-2.5.63-.58 1.18-1.07 1.18-1.75 0-.83-.67-1.5-1.5-1.5S11 8.67 11 9.5H9.5c0-1.65 1.35-3 3-3s3 1.35 3 3c0 1.21-.89 1.92-1.68 2.62z"/>
+    </svg>
+    <span class="tooltip-text">
+      Os pontos podem ser trocados por descontos exclusivos.<br>
+      <a href="/pages/clube-da-hana" target="_blank">Saiba mais</a>
+    </span>
+  </span>
+</span>
+
+  </p>
+{% elsif preco < 20000 %}
+  <!-- ... segue igual com 3x -->
+{% elsif preco < 30000 %}
+  <!-- ... segue igual com 4x -->
+{% else %}
+  <!-- ... segue igual com 5x -->
+{% endif %}

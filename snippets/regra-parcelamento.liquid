@@ -1,0 +1,166 @@
+{%- comment -%} Condicional que determina para quantas vezes o valor vai ser parcelado{%- endcomment -%}
+{%- assign preco_produto = product.price -%}
+{%- assign preco_maximo = product.compare_at_price_max | money -%}
+{%- assign on_sale = on_sale -%}
+{%- assign preco_variant = product.selected_or_first_available_variant.price -%}
+
+{%- liquid
+  if preco_produto < 10000
+    assign quantidade_vezes_parcelamento_produto = '1'
+    assign preco_parcelado_produto = preco_produto | round: 2 | money
+  elsif preco_produto >= 10000 and preco_produto < 15000
+    assign quantidade_vezes_parcelamento_produto = '2'
+    assign preco_parcelado_produto = preco_produto | divided_by: 2 | round: 2 | money
+  elsif preco_produto >= 15000 and preco_produto < 20000
+    assign quantidade_vezes_parcelamento_produto = '3'
+    assign preco_parcelado_produto = preco_produto | divided_by: 3 | round: 2 | money
+  elsif preco_produto >= 20000 and preco_produto < 25000
+    assign quantidade_vezes_parcelamento_produto = '4'
+    assign preco_parcelado_produto = preco_produto | divided_by: 4 | round: 2 | money
+  elsif preco_produto >= 25000 and preco_produto < 30000
+    assign quantidade_vezes_parcelamento_produto = '5'
+    assign preco_parcelado_produto = preco_produto | divided_by: 5 | round: 2 | money
+  elsif preco_produto >= 30000 and preco_produto < 35000
+    assign quantidade_vezes_parcelamento_produto = '6'
+    assign preco_parcelado_produto = preco_produto | divided_by: 6 | round: 2 | money
+  elsif preco_produto >= 35000 and preco_produto < 40000
+    assign quantidade_vezes_parcelamento_produto = '7'
+    assign preco_parcelado_produto = preco_produto | divided_by: 7 | round: 2 | money
+  elsif preco_produto >= 40000 and preco_produto < 45000
+    assign quantidade_vezes_parcelamento_produto = '8'
+    assign preco_parcelado_produto = preco_produto | divided_by: 8 | round: 2 | money
+  elsif preco_produto >= 45000 and preco_produto < 50000
+    assign quantidade_vezes_parcelamento_produto = '9'
+    assign preco_parcelado_produto = preco_produto | divided_by: 9 | round: 2 | money
+  elsif preco_produto >= 50000 and preco_produto < 55000
+    assign quantidade_vezes_parcelamento_produto = '10'
+    assign preco_parcelado_produto = preco_produto | divided_by: 10 | round: 2 | money
+  elsif preco_produto >= 55000 and preco_produto < 60000
+    assign quantidade_vezes_parcelamento_produto = '11'
+    assign preco_parcelado_produto = preco_produto | divided_by: 11 | round: 2 | money
+  elsif preco_produto >= 60000
+    assign quantidade_vezes_parcelamento_produto = '12'
+    assign preco_parcelado_produto = preco_produto | divided_by: 12 | round: 2 | money
+  endif
+-%}
+
+{%- liquid
+  if preco_variant < 10000
+    assign quantidade_vezes_parcelamento_variant = '1'
+    assign preco_parcelado_variant = preco_variant | round: 2 | money
+  elsif preco_variant >= 10000 and preco_variant < 15000
+    assign quantidade_vezes_parcelamento_variant = '2'
+    assign preco_parcelado_variant = preco_variant | divided_by: 2 | round: 2 | money
+  elsif preco_variant >= 15000 and preco_variant < 20000
+    assign quantidade_vezes_parcelamento_variant = '3'
+    assign preco_parcelado_variant = preco_variant | divided_by: 3 | round: 2 | money
+  elsif preco_variant >= 20000 and preco_variant < 25000
+    assign quantidade_vezes_parcelamento_variant = '4'
+    assign preco_parcelado_variant = preco_variant | divided_by: 4 | round: 2 | money
+  elsif preco_variant >= 25000 and preco_variant < 30000
+    assign quantidade_vezes_parcelamento_variant = '5'
+    assign preco_parcelado_variant = preco_variant | divided_by: 5 | round: 2 | money
+  elsif preco_variant >= 30000 and preco_variant < 35000
+    assign quantidade_vezes_parcelamento_variant = '6'
+    assign preco_parcelado_variant = preco_variant | divided_by: 6 | round: 2 | money
+  elsif preco_variant >= 35000 and preco_variant < 40000
+    assign quantidade_vezes_parcelamento_variant = '7'
+    assign preco_parcelado_variant = preco_variant | divided_by: 7 | round: 2 | money
+  elsif preco_variant >= 40000 and preco_variant < 45000
+    assign quantidade_vezes_parcelamento_variant = '8'
+    assign preco_parcelado_variant = preco_variant | divided_by: 8 | round: 2 | money
+  elsif preco_variant >= 45000 and preco_variant < 50000
+    assign quantidade_vezes_parcelamento_variant = '9'
+    assign preco_parcelado_variant = preco_variant | divided_by: 9 | round: 2 | money
+  elsif preco_variant >= 50000 and preco_variant < 55000
+    assign quantidade_vezes_parcelamento_variant = '10'
+    assign preco_parcelado_variant = preco_variant | divided_by: 10 | round: 2 | money
+  elsif preco_variant >= 55000 and preco_variant < 60000
+    assign quantidade_vezes_parcelamento_variant = '11'
+    assign preco_parcelado_variant = preco_variant | divided_by: 11 | round: 2 | money
+  elsif preco_variant >= 60000
+    assign quantidade_vezes_parcelamento_variant = '12'
+    assign preco_parcelado_variant = preco_variant | divided_by: 12 | round: 2 | money
+  endif
+-%}
+
+{% assign pontos_produto = preco_produto | divided_by: 100 %}
+{% assign pontos_variant = preco_variant | divided_by: 100 %}
+
+{%- comment -%} Texto referente ao parcelamento{%- endcomment -%}
+{% if nome_arquivo == 'product-list-style' %}
+  <div class="container-rules-installment__product-list-styles">
+    {%- if on_sale -%}
+      <p class="price_compare-at-price">{{ preco_maximo }}</p>
+    {%- endif -%}
+    <p class="product-price-pp">{{ preco_produto | money }}</p>
+    <div class="container-price-installment">
+      <p class="price-installment-times">Pague em até <span class="price-installment"> 3x </span> sem juros</p>
+    </div>
+    <p class="price-pix">
+      e ganhe <span class="price-off-pix">{{ pontos_produto }} pontos</span>
+    </p>
+  </div>
+{% endif %}
+
+{% if nome_arquivo == 'product-grid-item' %}
+  <div class="container-rules-installment__product-grid-item">
+    <div class="container-prices-pp">
+      <p class="product-price-pp">{{ preco_produto | money }}</p>
+      {%- if on_sale -%}
+        <p class="price_compare-at-price">{{ preco_maximo }}</p>
+      {%- endif -%}
+    </div>
+    <div class="container-price-installment">
+      <p class="price-installment-times">
+        Pague em até
+        <span class="price-installment"> 3x </span>
+        sem juros
+      </p>
+    </div>
+    <p class="price-pix">
+      e ganhe <span class="price-off-pix">{{ pontos_produto }} pontos</span>
+    </p>
+  </div>
+{% endif %}
+
+{% if nome_arquivo == 'product-price' %}
+  <div class="container-rules-installment__product-price">
+    <div class="container-prices-pp">
+      <span
+        class="js-product-price product-single__price{% if variant.compare_at_price > variant.price %} on-sale{% endif %}"
+        itemprop="price"
+        content="{{ variant.price | divided_by: 100.00 }}"
+      >
+        {{ variant.price | money }}
+      </span>
+      {%- if variant.compare_at_price > variant.price -%}
+        <span class="js-product-price-a11y sr-only invisible">{{ 'products.general.regular_price' | t }}</span>
+        <span class="product-single__price--wrapper ms-1" aria-hidden="false">
+          <span class="js-product-compare-price product-single__price--compare-at">
+            {{ variant.compare_at_price | money }}
+          </span>
+        </span>
+        <span class="js-product-compare-price-a11y sr-only invisible" aria-hidden="false">
+          {{- 'products.general.sale_price' | t -}}
+        </span>
+      {%- else -%}
+        <span id="PriceA11y" class="sr-only invisible">{{ 'products.general.regular_price' | t }}</span>
+        <span class="product-single__price--wrapper d-none ms-1" aria-hidden="true">
+          <span class="js-product-compare-price product-single__price--compare-at"></span>
+        </span>
+        <span class="js-product-compare-price-a11y sr-only invisible" aria-hidden="true">
+          {{- 'products.general.sale_price' | t -}}
+        </span>
+      {%- endif -%}
+    </div>
+    <div class="container-price-installment">
+      <p class="complement-1">Pague em até</p>
+      <span class="price-installment"> 3x </span>
+      <p class="complement-2">sem juros</p>
+      <p class="price-pix">
+        e ganhe <span class="price-off-pix js-price-installment">{{ pontos_variant }} pontos</span>
+      </p>
+    </div>
+  </div>
+{% endif %}
