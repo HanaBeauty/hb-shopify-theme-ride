@@ -3,17 +3,20 @@
 
   if (typeof window === 'undefined') return;
 
-  const activeInstances = new WeakMap();
+  const cleanupRegistry = new WeakMap();
 
   function parseConfig(element) {
-    const rawConfig = element.getAttribute('data-installments-config');
+    const script = element.querySelector('script[data-installments-config]');
 
-    if (!rawConfig) {
+    if (!script) {
       return [];
     }
 
     try {
-      return JSON.parse(rawConfig);
+      const raw = script.textContent?.trim();
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
     } catch (error) {
       console.warn('Unable to parse installments configuration', error);
       return [];
@@ -21,90 +24,131 @@
   }
 
   function formatMoney(cents, format) {
+    const amount = Math.round(Number(cents) || 0);
+
     if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
-      return Shopify.formatMoney(cents, format);
+      return Shopify.formatMoney(amount, format);
     }
 
-    const value = (cents / 100).toFixed(2);
+    const value = (amount / 100).toFixed(2);
     return format ? format.replace('{{amount}}', value) : value;
   }
 
-  function toggleTable(element, expanded) {
-    const button = element.querySelector('[data-installments-toggle]');
-    const showLabel = element.querySelector('[data-installments-toggle-label-show]');
-    const hideLabel = element.querySelector('[data-installments-toggle-label-hide]');
-    const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
+  function calculateTotals(price, option) {
+    const basePrice = Math.round(Number(price) || 0);
+    const rate = Number(option?.rate) || 0;
+    const count = Number(option?.count) || 1;
+    const hasInterest = Boolean(option?.interest && rate);
 
-    const shouldExpand = typeof expanded === 'boolean' ? expanded : tableWrapper.hasAttribute('hidden');
+    const total = hasInterest ? Math.round(basePrice * (1 + rate)) : basePrice;
+    const perInstallment = count > 0 ? Math.round(total / count) : total;
 
-    if (shouldExpand) {
-      tableWrapper.removeAttribute('hidden');
-    } else {
-      tableWrapper.setAttribute('hidden', 'true');
-    }
-
-    button?.setAttribute('aria-expanded', shouldExpand ? 'true' : 'false');
-    showLabel?.toggleAttribute('hidden', shouldExpand);
-    hideLabel?.toggleAttribute('hidden', !shouldExpand);
+    return {
+      total,
+      perInstallment,
+      hasInterest,
+      count,
+      rate,
+    };
   }
 
-  function getSummaryTemplate(element) {
+  function getSummaryTemplate(element, hasInterest) {
+    if (hasInterest) {
+      const interestTemplate = element.getAttribute('data-summary-template-interest');
+      if (interestTemplate) return interestTemplate;
+    }
+
     return element.getAttribute('data-summary-template') || '';
   }
 
-  function updateSummary({
-    element,
-    option,
-    perInstallmentValue,
-    moneyFormat,
-  }) {
-    const summaryText = element.querySelector('[data-installments-summary]');
-    const summaryFootnote = element.querySelector('[data-installments-summary-footnote]');
-    const disclaimer = element.querySelector('[data-installments-disclaimer]');
-    const template = getSummaryTemplate(element);
+  function updateSummary(element, optionTotals, moneyFormat) {
+    const summaryEl = element.querySelector('[data-installments-summary]');
+    const footnoteEl = element.querySelector('[data-installments-summary-footnote]');
 
-    if (!summaryText) return;
+    if (!summaryEl || !optionTotals) return;
 
-    const formattedValue = formatMoney(perInstallmentValue, moneyFormat);
-    const summary = template
-      .replace('%count%', option.count)
+    const template = getSummaryTemplate(element, optionTotals.hasInterest);
+    const formattedValue = formatMoney(optionTotals.perInstallment, moneyFormat);
+
+    const summaryText = template
+      .replace('%count%', optionTotals.count)
       .replace('%value%', formattedValue);
 
-    summaryText.textContent = summary;
+    summaryEl.textContent = summaryText;
 
-    const shouldShowFootnote = !!option.interest;
-    summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
-    disclaimer?.toggleAttribute('hidden', !shouldShowFootnote);
+    if (footnoteEl) {
+      footnoteEl.toggleAttribute('hidden', !optionTotals.hasInterest);
+    }
   }
 
-  function createRow({ element, option, perInstallmentValue, moneyFormat, highlight }) {
-    const interestLabel = element.getAttribute('data-interest-label') || '';
-    const noInterestLabel = element.getAttribute('data-no-interest-label') || '';
+  function updatePoints(element, price) {
+    const pointsEl = element.querySelector('[data-installments-points]');
+    if (!pointsEl) return;
+
+    const template = element.getAttribute('data-points-template') || pointsEl.textContent || '';
+    const points = Math.max(0, Math.floor((Number(price) || 0) / 100));
+
+    if (template.includes('%points%')) {
+      pointsEl.textContent = template.replace('%points%', points);
+    } else {
+      pointsEl.textContent = template;
+    }
+  }
+
+  function formatRate(rate) {
+    if (!Number.isFinite(rate) || rate <= 0) return '';
+
+    return (rate * 100).toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
+  function createRow({ element, option, totals, moneyFormat, highlight }) {
+    const interestLabel = element.getAttribute('data-interest-label') || 'Com juros';
+    const noInterestLabel = element.getAttribute('data-no-interest-label') || 'Sem juros';
 
     const row = document.createElement('tr');
     row.className = 'installments-table__row';
 
-    if (highlight && Number(highlight) === option.count) {
+    if (Number(highlight) === totals.count) {
       row.classList.add('installments-table__row--highlight');
     }
+
+    row.dataset.installmentCount = totals.count;
 
     const installmentCell = document.createElement('th');
     installmentCell.scope = 'row';
     installmentCell.className = 'installments-table__installment';
-    installmentCell.textContent = `${option.count}x`;
+    installmentCell.textContent = `${totals.count}x`;
 
     const interestSpan = document.createElement('span');
     interestSpan.className = 'installments-table__interest';
-    interestSpan.textContent = option.interest ? interestLabel : noInterestLabel;
+
+    if (totals.hasInterest) {
+      const rateText = formatRate(totals.rate);
+      const label = interestLabel;
+      interestSpan.dataset.installmentInterest = 'true';
+      if (rateText) {
+        interestSpan.dataset.installmentRate = rateText;
+        interestSpan.textContent = `${label} (${rateText}%)`;
+      } else {
+        interestSpan.textContent = label;
+      }
+    } else {
+      interestSpan.textContent = noInterestLabel;
+    }
+
     installmentCell.appendChild(interestSpan);
 
     const valueCell = document.createElement('td');
     valueCell.className = 'installments-table__value';
-    valueCell.textContent = formatMoney(perInstallmentValue, moneyFormat);
+    valueCell.dataset.installmentValue = '';
+    valueCell.textContent = formatMoney(totals.perInstallment, moneyFormat);
 
-    if (option.interest) {
+    if (totals.hasInterest) {
       const footnote = document.createElement('span');
-      footnote.className = 'installments__summary-footnote';
+      footnote.className = 'installments-table__footnote';
       footnote.textContent = '*';
       valueCell.appendChild(footnote);
     }
@@ -115,49 +159,74 @@
     return row;
   }
 
-  function calculatePerInstallment(price, option) {
-    const total = option.interest ? Math.round(price * (1 + Number(option.rate))) : price;
-    return Math.round(total / option.count);
-  }
+  function updateTable(element, price, config) {
+    const tbody = element.querySelector('[data-installments-table-body]');
+    if (!tbody) return;
 
-  function updateTable(element, price) {
-    const config = parseConfig(element);
-    const tableBody = element.querySelector('[data-installments-table-body]');
     const moneyFormat = element.getAttribute('data-money-format') || '';
-    const highlight = element.getAttribute('data-highlight-installment');
+    const highlight = Number(element.getAttribute('data-highlight-installment'));
 
-    if (!Array.isArray(config) || !config.length || !tableBody) {
-      return;
-    }
+    tbody.innerHTML = '';
 
-    tableBody.innerHTML = '';
+    const fragment = document.createDocumentFragment();
 
     config.forEach((option) => {
-      const perInstallmentValue = calculatePerInstallment(price, option);
+      const totals = calculateTotals(price, option);
       const row = createRow({
         element,
         option,
-        perInstallmentValue,
+        totals,
         moneyFormat,
         highlight,
       });
-      tableBody.appendChild(row);
+      fragment.appendChild(row);
     });
 
-    const lastOption = config[config.length - 1];
-    const summaryValue = calculatePerInstallment(price, lastOption);
-    updateSummary({
-      element,
-      option: lastOption,
-      perInstallmentValue: summaryValue,
-      moneyFormat,
-    });
+    tbody.appendChild(fragment);
   }
 
-  function handleVariantChange(element, price) {
-    if (!price) return;
+  function updateDisclaimer(element, config) {
+    const disclaimer = element.querySelector('[data-installments-disclaimer]');
+    if (!disclaimer) return;
 
-    updateTable(element, price);
+    const hasInterest = config.some((option) => option && option.interest);
+    disclaimer.toggleAttribute('hidden', !hasInterest);
+  }
+
+  function getSummaryOption(config, highlightCount) {
+    if (!Array.isArray(config) || !config.length) return null;
+
+    const highlightOption = config.find((option) => Number(option?.count) === highlightCount);
+    return highlightOption || config[config.length - 1];
+  }
+
+  function updateInstallments(element, price, config) {
+    if (!Array.isArray(config) || !config.length) {
+      return;
+    }
+
+    const moneyFormat = element.getAttribute('data-money-format') || '';
+    const highlightCount = Number(element.getAttribute('data-highlight-installment')) || 0;
+    const summaryOption = getSummaryOption(config, highlightCount);
+    const summaryTotals = calculateTotals(price, summaryOption);
+
+    updateSummary(element, summaryTotals, moneyFormat);
+    updatePoints(element, price);
+    updateTable(element, price, config);
+    updateDisclaimer(element, config);
+  }
+
+  function handleVariantChange(element, config, fallbackPrice, payload) {
+    if (!payload || !payload.data) return;
+    const { data } = payload;
+
+    if (data.sectionId !== element.getAttribute('data-section')) {
+      return;
+    }
+
+    const variantPrice = data.variant?.price;
+    const price = Number.isFinite(Number(variantPrice)) ? variantPrice : fallbackPrice;
+    updateInstallments(element, price, config);
   }
 
   function initialize(element) {
@@ -166,41 +235,20 @@
     }
 
     const config = parseConfig(element);
-    if (!Array.isArray(config) || !config.length) return;
+    if (!config.length) return;
 
     element.dataset.installmentsInitialized = 'true';
 
-    const moneyFormat = element.getAttribute('data-money-format');
-    const tableHeadingInstallments = element.getAttribute('data-table-heading-installments');
-    const tableHeadingValue = element.getAttribute('data-table-heading-value');
-    const initialPriceAttribute = element.getAttribute('data-initial-price');
-    const parsedInitialPrice = Number(initialPriceAttribute);
-    const initialPrice = Number.isFinite(parsedInitialPrice) ? parsedInitialPrice : 0;
-    const tableHeadingInstallmentsEl = element.querySelector('[data-installments-table-heading-installments]');
-    const tableHeadingValueEl = element.querySelector('[data-installments-table-heading-value]');
-    const toggleButton = element.querySelector('[data-installments-toggle]');
+    const initialPriceAttr = element.getAttribute('data-initial-price');
+    const initialPrice = Number.isFinite(Number(initialPriceAttr)) ? Number(initialPriceAttr) : 0;
 
-    tableHeadingInstallmentsEl && (tableHeadingInstallmentsEl.textContent = tableHeadingInstallments || '');
-    tableHeadingValueEl && (tableHeadingValueEl.textContent = tableHeadingValue || '');
-
-    if (toggleButton) {
-      toggleButton.addEventListener('click', () => {
-        toggleTable(element);
-      });
-    }
-
-    const sectionId = element.getAttribute('data-section');
-
-    updateTable(element, initialPrice);
+    updateInstallments(element, initialPrice, config);
 
     if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
-      const unsubscribe = subscribe(PUB_SUB_EVENTS.variantChange, ({ data }) => {
-        if (!data || data.sectionId !== sectionId) return;
-        const variantPrice = data.variant?.price;
-        handleVariantChange(element, variantPrice ?? initialPrice);
-      });
+      const handler = (payload) => handleVariantChange(element, config, initialPrice, payload);
+      const unsubscribe = subscribe(PUB_SUB_EVENTS.variantChange, handler);
 
-      activeInstances.set(element, () => {
+      cleanupRegistry.set(element, () => {
         unsubscribe?.();
       });
     }
@@ -208,9 +256,10 @@
 
   function cleanup(element) {
     if (!element) return;
-    const dispose = activeInstances.get(element);
-    dispose?.();
-    activeInstances.delete(element);
+
+    const disposer = cleanupRegistry.get(element);
+    disposer?.();
+    cleanupRegistry.delete(element);
     delete element.dataset.installmentsInitialized;
   }
 
