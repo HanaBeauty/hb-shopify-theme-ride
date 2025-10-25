@@ -252,6 +252,18 @@
     const fallbackCount = element.getAttribute('data-highlight-installment');
     const count = option?.count ?? fallbackCount;
     let summary = template.replace(/%count%/g, Number.isFinite(Number(count)) ? count : '');
+    const formattedValue = formatMoney(perInstallmentValue, formatString);
+    const fallbackCount = element.getAttribute('data-highlight-installment');
+    const count = option?.count ?? fallbackCount;
+    let summary = template.replace(/%count%/g, Number.isFinite(Number(count)) ? count : '');
+
+    if (summary.includes('%value%')) {
+      summary = summary.replace(/%value%/g, formattedValue);
+    }
+
+    summary = summary.replace(/\{\{\s*(amount[^}]*?)\s*\}\}/g, (_, token) => {
+      return formatMoney(perInstallmentValue, `{{${token}}}`);
+    });
 
     if (summary.includes('%value%')) {
       summary = summary.replace(/%value%/g, formattedValue);
