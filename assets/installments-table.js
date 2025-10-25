@@ -5,19 +5,66 @@
 
   const activeInstances = new WeakMap();
 
+  function normaliseConfigValue(value) {
+    if (typeof value !== 'string') return '';
+
+    return value
+      .replace(/&quot;/g, '"')
+      .replace(/&#34;/g, '"')
+      .replace(/&#x22;/gi, '"')
+      .trim();
+  }
+
+  function ensureArray(config) {
+    if (!config) return [];
+
+    return Array.isArray(config) ? config : [config];
+  }
+
   function parseConfig(element) {
-    const rawConfig = element.getAttribute('data-installments-config');
+    const scriptConfig = element.querySelector('script[data-installments-config]');
+
+    if (scriptConfig) {
+      const scriptValue = scriptConfig.textContent?.trim();
+
+      if (scriptValue) {
+        try {
+          return ensureArray(JSON.parse(scriptValue));
+        } catch (error) {
+          console.warn('Unable to parse installments configuration from script', error);
+        }
+      }
+    }
+
+    const rawConfig = normaliseConfigValue(
+      element.getAttribute('data-installments-config') ||
+        element.dataset.installmentsConfig,
+    );
 
     if (!rawConfig) {
       return [];
     }
 
     try {
-      return JSON.parse(rawConfig);
+      return ensureArray(JSON.parse(rawConfig));
     } catch (error) {
-      console.warn('Unable to parse installments configuration', error);
-      return [];
+      try {
+        return ensureArray(JSON.parse(normaliseConfigValue(rawConfig)));
+      } catch (fallbackError) {
+        console.warn('Unable to parse installments configuration', fallbackError);
+        return [];
+      }
     }
+  }
+
+  function getConfig(element) {
+    if (!element) return [];
+
+    if (!element.__installmentsConfig) {
+      element.__installmentsConfig = parseConfig(element);
+    }
+
+    return element.__installmentsConfig;
   }
 
   function formatMoney(cents, format) {
@@ -165,7 +212,7 @@
   }
 
   function updateTable(element, price) {
-    const config = parseConfig(element);
+    const config = getConfig(element);
     const tableBody = element.querySelector('[data-installments-table-body]');
     const moneyFormat = element.getAttribute('data-money-format') || '';
     const highlight = element.getAttribute('data-highlight-installment');
@@ -221,7 +268,7 @@
       return;
     }
 
-    const config = parseConfig(element);
+    const config = getConfig(element);
     if (!Array.isArray(config) || !config.length) return;
 
     element.dataset.installmentsInitialized = 'true';
@@ -240,10 +287,9 @@
     tableHeadingInstallmentsEl && (tableHeadingInstallmentsEl.textContent = tableHeadingInstallments || '');
     tableHeadingValueEl && (tableHeadingValueEl.textContent = tableHeadingValue || '');
 
-    if (toggleButton) {
-      toggleButton.addEventListener('click', () => {
-        toggleTable(element);
-      });
+    if (tableWrapper) {
+      tableWrapper.hidden = false;
+      tableWrapper.removeAttribute('hidden');
     }
 
     const initiallyExpanded = tableWrapper && !tableWrapper.hasAttribute('hidden');
@@ -272,6 +318,7 @@
     dispose?.();
     activeInstances.delete(element);
     delete element.dataset.installmentsInitialized;
+    delete element.__installmentsConfig;
   }
 
   function initAll(scope = document) {

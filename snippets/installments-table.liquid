@@ -90,6 +90,9 @@
   data-table-heading-installments="{{ 'products.product.installments.table_heading_installments' | t }}"
   data-table-heading-value="{{ 'products.product.installments.table_heading_value' | t }}"
 >
+  <script type="application/json" data-installments-config>
+    {{ installment_options | json }}
+  </script>
   <div class="installments__header">
     <p class="installments__summary" aria-live="polite">
       <span class="installments__summary-icon" aria-hidden="true">
