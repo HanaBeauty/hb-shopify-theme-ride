@@ -11,6 +11,12 @@
   gap: 1rem;
 }
 
+.installments__points {
+  margin: 0.25rem 0 0;
+  color: #444;
+  font-weight: 500;
+}
+
 .installments__summary {
   display: flex;
   align-items: baseline;

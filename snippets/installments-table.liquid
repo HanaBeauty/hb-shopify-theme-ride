@@ -1,7 +1,8 @@
-{% assign installment_options = '[{"count":1,"rate":0.0270,"interest":false},{"count":2,"rate":0.0497,"interest":false},{"count":3,"rate":0.0555,"interest":false},{"count":4,"rate":0.0617,"interest":false},{"count":5,"rate":0.0676,"interest":false},{"count":6,"rate":0.0734,"interest":false},{"count":7,"rate":0.0748,"interest":true},{"count":8,"rate":0.0810,"interest":true},{"count":9,"rate":0.0872,"interest":true},{"count":10,"rate":0.0917,"interest":true},{"count":11,"rate":0.0979,"interest":true},{"count":12,"rate":0.1042,"interest":true}]' | parse_json %}
-{% assign highest_option = installment_options | last %}
-{% assign highest_rate_multiplier = highest_option.rate | plus: 1 %}
-{% assign highest_installment_value = product.selected_or_first_available_variant.price | times: highest_rate_multiplier | divided_by: highest_option.count %}
+{% assign installment_options = '[{"count":1,"rate":0,"interest":false},{"count":2,"rate":0,"interest":false},{"count":3,"rate":0,"interest":false},{"count":4,"rate":0,"interest":false},{"count":5,"rate":0,"interest":false},{"count":6,"rate":0,"interest":false},{"count":7,"rate":0.0748,"interest":true},{"count":8,"rate":0.0810,"interest":true},{"count":9,"rate":0.0872,"interest":true},{"count":10,"rate":0.0917,"interest":true},{"count":11,"rate":0.0979,"interest":true},{"count":12,"rate":0.1042,"interest":true}]' | parse_json %}
+{% assign highlight_installment = 6 %}
+{% assign highlight_option = installment_options | where: 'count', highlight_installment | first %}
+{% assign highlight_installment_value = product.selected_or_first_available_variant.price | times: 1.0 | divided_by: highlight_installment | round: 0 %}
+{% assign reward_points = product.selected_or_first_available_variant.price | divided_by: 100 | floor %}
 
 <div
   class="installments"
@@ -10,7 +11,7 @@
   data-initial-price="{{ product.selected_or_first_available_variant.price }}"
   data-installments-config='{{ installment_options | json | escape }}'
   data-highlight-installment="6"
-  data-summary-template="{{ 'products.product.installments.summary' | t: count: '%count%', value: '%value%' }}"
+  data-summary-template="Parcelas: até %count%x sem juros de %value%"
   data-money-format="{{ shop.money_format | escape }}"
   data-interest-label="{{ 'products.product.installments.with_interest' | t }}"
   data-no-interest-label="{{ 'products.product.installments.without_interest' | t }}"
@@ -29,9 +30,9 @@
       </span>
       <span class="visually-hidden">{{ 'products.product.installments.icon_label' | t }}</span>
       <span class="installments__summary-text" data-installments-summary>
-        {{ 'products.product.installments.summary' | t: count: highest_option.count, value: highest_installment_value | money }}
+        Parcelas: até {{ highlight_installment }}x sem juros de {{ highlight_installment_value | money }}
       </span>
-      <span class="installments__summary-footnote" data-installments-summary-footnote{% unless highest_option.interest %} hidden{% endunless %}>*</span>
+      <span class="installments__summary-footnote" data-installments-summary-footnote{% if highlight_option and highlight_option.interest %}{% else %} hidden{% endif %}>*</span>
     </p>
     <button
       class="installments__toggle"
@@ -50,6 +51,14 @@
     </button>
   </div>
 
+  <p
+    class="installments__points"
+    data-installments-points
+    data-installments-points-template="Pontos: ganhe %points% pontos"
+  >
+    Pontos: ganhe {{ reward_points }} pontos
+  </p>
+
   <div class="installments__table-wrapper" data-installments-table-wrapper hidden>
     <table class="installments-table" id="InstallmentsTable-{{ section.id }}">
       <thead>
@@ -62,7 +71,7 @@
     </table>
   </div>
 
-  <p class="installments__disclaimer" data-installments-disclaimer{% unless highest_option.interest %} hidden{% endunless %}>
+  <p class="installments__disclaimer" data-installments-disclaimer{% if highlight_option and highlight_option.interest %}{% else %} hidden{% endif %}>
     {{ 'products.product.installments.interest_disclaimer' | t }}
   </p>
 </div>
