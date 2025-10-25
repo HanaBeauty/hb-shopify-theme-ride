@@ -1,0 +1,205 @@
+.hana-pro-cta {
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+  color: #373737;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.hana-pro-cta__header {
+  margin-bottom: 12px;
+}
+
+.hana-pro-badge {
+  display: inline-block;
+  background: #f9e8ee;
+  color: #bf1b5a;
+  border: 1px solid #f3cddb;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.hana-pro-title {
+  margin: 10px 0 6px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #373737;
+}
+
+.hana-pro-sub {
+  margin: 0;
+  font-size: 1rem;
+  color: #525252;
+}
+
+.hana-pro-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+  padding: 12px 0 0;
+  margin: 0 0 10px;
+  list-style: none;
+}
+
+.hana-pro-benefits li {
+  font-size: 0.95rem;
+}
+
+.hana-pro-form {
+  margin-top: 6px;
+}
+
+.hana-pro-field {
+  margin-bottom: 12px;
+}
+
+.hana-pro-field label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: #3d3d3d;
+  font-weight: 600;
+}
+
+.hana-pro-control {
+  position: relative;
+}
+
+.hana-pro-select,
+.hana-pro-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #fafafa;
+  padding: 0 14px;
+  font-size: 1rem;
+  color: #373737;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.hana-pro-select:focus,
+.hana-pro-input:focus {
+  outline: none;
+  border-color: #bf1b5a;
+  box-shadow: 0 0 0 3px rgba(191, 27, 90, 0.15);
+  background: #fff;
+}
+
+.hana-pro-control::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #9a9a9a;
+  pointer-events: none;
+}
+
+.hana-pro-input[hidden] {
+  display: none;
+}
+
+.hana-pro-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 8px 0 12px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.hana-pro-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  background: #f1fff5;
+  border: 1px solid #d7f5df;
+  color: #2e7d32;
+}
+
+.hana-pro-chip.warn {
+  background: #fff8e6;
+  border-color: #ffe2a9;
+  color: #9a6a00;
+}
+
+.hana-pro-light {
+  opacity: 0.9;
+}
+
+.hana-pro-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  padding: 0.8em 1.35em;
+  border: 1px solid #25d366;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #ffffff, #f7fff9);
+  color: #25d366;
+  font-size: 1rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.06s ease, background-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 2px 12px rgba(37, 211, 102, 0.18);
+}
+
+.hana-pro-btn:hover,
+.hana-pro-btn:focus {
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.28);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.hana-pro-icon {
+  flex-shrink: 0;
+}
+
+.hana-pro-note {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #6b6b6b;
+}
+
+@media (max-width: 480px) {
+  .hana-pro-cta {
+    font-size: 1.06rem;
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .hana-pro-title {
+    font-size: 1.32rem;
+  }
+
+  .hana-pro-select,
+  .hana-pro-input {
+    height: 46px;
+    font-size: 1.06rem;
+  }
+
+  .hana-pro-btn {
+    font-size: 1.06rem;
+    padding: 0.85em 1.45em;
+  }
+}
