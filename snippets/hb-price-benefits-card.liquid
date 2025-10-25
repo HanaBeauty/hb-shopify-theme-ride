@@ -11,10 +11,10 @@
 <div class="hb-benefits-card" aria-label="Informações de pagamento e pontos">
   <div class="hb-benefits-card__row">
     <span class="hb-benefits-card__price">
-      {{ price_cents | money }}
+      {{ price_cents | money | strip_html }}
     </span>
     <span class="hb-benefits-card__installments">
-      ou 6x de {{ installment6_cents | money }}
+      ou 6x de {{ installment6_cents | money | strip_html }}
     </span>
     <span class="hb-benefits-card__points">
       – Ganhe {{ points }} pontos

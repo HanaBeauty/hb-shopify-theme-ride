@@ -13,12 +13,11 @@
   class="hb-benefits"
   data-hb-benefits
   data-hb-price="{{ price_cents }}"
-  data-hb-money-format="{{ shop.money_format | escape }}"
   aria-live="polite"
 >
   <p class="hb-benefits__summary">
-    <span class="hb-benefits__price">{{ price_cents | money }}</span>
-    <span class="hb-benefits__installments"> ou 6x de {{ installment6_cents | money }}</span>
+    <span class="hb-benefits__price">{{ price_cents | money | strip_html }}</span>
+    <span class="hb-benefits__installments"> ou 6x de {{ installment6_cents | money | strip_html }}</span>
     <span class="hb-benefits__points"> e ganhe {{ points }} pontos</span>
   </p>
 
