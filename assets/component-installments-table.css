@@ -1,6 +1,6 @@
 .installments {
   margin-top: 1.5rem;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   color: #333;
 }
 
@@ -11,30 +11,47 @@
   gap: 1rem;
 }
 
+.installments__points {
+  margin: 0.5rem 0 0;
+  color: #222;
+  font-size: 1.1875rem;
+  font-weight: 600;
+}
+
 .installments__summary {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.75rem;
   margin: 0;
   color: #222;
-  font-size: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .installments__summary-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 9999px;
   background-color: #f4e7ed;
   color: #c91c57;
+  flex-shrink: 0;
+}
+
+.installments__summary-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .installments__summary-text {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.35rem;
+  flex-wrap: wrap;
+  font-weight: inherit;
 }
 
 .installments__summary-footnote {
@@ -106,8 +123,8 @@
   display: inline-block;
   margin-left: 0.375rem;
   font-size: 0.8125rem;
-  font-weight: 400;
-  color: #999;
+  font-weight: 500;
+  color: #666;
 }
 
 .installments-table__row--highlight {
@@ -119,6 +136,18 @@
 .installments-table__row--highlight th {
   color: inherit;
   font-weight: 600;
+}
+
+.installments-table__value {
+  font-weight: 600;
+  color: #222;
+}
+
+.installments-table__footnote {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  color: currentColor;
+  vertical-align: middle;
 }
 
 .installments__disclaimer {
