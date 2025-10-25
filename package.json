@@ -1,0 +1,9 @@
+{
+  "name": "hb-shopify-theme-ride",
+  "version": "1.0.0",
+  "description": "Test setup for cart utilities",
+  "scripts": {
+    "test": "node --test tests"
+  },
+  "devDependencies": {}
+}

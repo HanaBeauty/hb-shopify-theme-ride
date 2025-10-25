@@ -1,91 +1,128 @@
-class CartRemoveButton extends HTMLElement {
-  constructor() {
-    super();
+function getQuantityValidationResult({ value, min, max, step, strings }) {
+  const parsedValue = parseInt(value, 10);
+  const minValue = min !== undefined ? parseInt(min, 10) : NaN;
+  const maxValue = max !== undefined ? parseInt(max, 10) : NaN;
+  const stepValue = step !== undefined ? parseInt(step, 10) : NaN;
 
-    this.addEventListener('click', (event) => {
-      event.preventDefault();
-      const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
-      cartItems.updateQuantity(this.dataset.index, 0, event);
-    });
+  let message = '';
+
+  if (!Number.isNaN(parsedValue) && !Number.isNaN(minValue) && parsedValue < minValue) {
+    message = typeof strings?.min_error === 'string' ? strings.min_error.replace('[min]', String(minValue)) : '';
+  } else if (!Number.isNaN(parsedValue) && !Number.isNaN(maxValue) && parsedValue > maxValue) {
+    message = typeof strings?.max_error === 'string' ? strings.max_error.replace('[max]', String(maxValue)) : '';
+  } else if (
+    !Number.isNaN(parsedValue) &&
+    !Number.isNaN(stepValue) &&
+    stepValue > 0 &&
+    parsedValue % stepValue !== 0
+  ) {
+    message = typeof strings?.step_error === 'string' ? strings.step_error.replace('[step]', String(stepValue)) : '';
   }
+
+  return {
+    message,
+    parsedValue,
+  };
 }
 
-customElements.define('cart-remove-button', CartRemoveButton);
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { getQuantityValidationResult };
+}
 
-class CartItems extends HTMLElement {
-  constructor() {
-    super();
-    this.lineItemStatusElement =
-      document.getElementById('shopping-cart-line-item-status') || document.getElementById('CartDrawer-LineItemStatus');
-
-    const debouncedOnChange = debounce((event) => {
-      this.onChange(event);
-    }, ON_CHANGE_DEBOUNCE_TIMER);
-
-    this.addEventListener('change', debouncedOnChange.bind(this));
+function initializeCartComponents(global) {
+  if (!global || !global.document || !global.customElements) {
+    return;
   }
 
-  cartUpdateUnsubscriber = undefined;
+  const { document, customElements } = global;
 
-  connectedCallback() {
-    this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
-      if (event.source === 'cart-items') {
-        return;
+  class CartRemoveButton extends HTMLElement {
+    constructor() {
+      super();
+
+      this.addEventListener('click', (event) => {
+        event.preventDefault();
+        const cartItems = this.closest('cart-items') || this.closest('cart-drawer-items');
+        cartItems.updateQuantity(this.dataset.index, 0, event);
+      });
+    }
+  }
+
+  customElements.define('cart-remove-button', CartRemoveButton);
+
+  class CartItems extends HTMLElement {
+    constructor() {
+      super();
+      this.lineItemStatusElement =
+        document.getElementById('shopping-cart-line-item-status') ||
+        document.getElementById('CartDrawer-LineItemStatus');
+
+      const debouncedOnChange = debounce((event) => {
+        this.onChange(event);
+      }, ON_CHANGE_DEBOUNCE_TIMER);
+
+      this.addEventListener('change', debouncedOnChange.bind(this));
+    }
+
+    cartUpdateUnsubscriber = undefined;
+
+    connectedCallback() {
+      this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
+        if (event.source === 'cart-items') {
+          return;
+        }
+        return this.onCartUpdate();
+      });
+    }
+
+    disconnectedCallback() {
+      if (this.cartUpdateUnsubscriber) {
+        this.cartUpdateUnsubscriber();
       }
-      return this.onCartUpdate();
-    });
-  }
-
-  disconnectedCallback() {
-    if (this.cartUpdateUnsubscriber) {
-      this.cartUpdateUnsubscriber();
-    }
-  }
-
-  resetQuantityInput(id) {
-    const input = this.querySelector(`#Quantity-${id}`);
-    input.value = input.getAttribute('value');
-    this.isEnterPressed = false;
-  }
-
-  setValidity(event, index, message) {
-    event.target.setCustomValidity(message);
-    event.target.reportValidity();
-    this.resetQuantityInput(index);
-    event.target.select();
-  }
-
-  validateQuantity(event) {
-    const inputValue = parseInt(event.target.value);
-    const index = event.target.dataset.index;
-    let message = '';
-
-    if (inputValue < event.target.dataset.min) {
-      message = window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min);
-    } else if (inputValue > parseInt(event.target.max)) {
-      message = window.quickOrderListStrings.max_error.replace('[max]', event.target.max);
-    } else if (inputValue % parseInt(event.target.step) !== 0) {
-      message = window.quickOrderListStrings.step_error.replace('[step]', event.target.step);
     }
 
-    if (message) {
-      this.setValidity(event, index, message);
-    } else {
-      event.target.setCustomValidity('');
+    resetQuantityInput(id) {
+      const input = this.querySelector(`#Quantity-${id}`);
+      input.value = input.getAttribute('value');
+      this.isEnterPressed = false;
+    }
+
+    setValidity(event, index, message) {
+      event.target.setCustomValidity(message);
       event.target.reportValidity();
-      this.updateQuantity(
-        index,
-        inputValue,
-        event,
-        document.activeElement.getAttribute('name'),
-        event.target.dataset.quantityVariantId
-      );
+      this.resetQuantityInput(index);
+      event.target.select();
     }
-  }
 
-  onChange(event) {
-    this.validateQuantity(event);
-  }
+    validateQuantity(event) {
+      const index = event.target.dataset.index;
+      const quickOrderListStrings = global.quickOrderListStrings || {};
+      const { message, parsedValue } = getQuantityValidationResult({
+        value: event.target.value,
+        min: event.target.dataset.min,
+        max: event.target.max,
+        step: event.target.step,
+        strings: quickOrderListStrings,
+      });
+
+      if (message) {
+        this.setValidity(event, index, message);
+      } else {
+        event.target.setCustomValidity('');
+        event.target.reportValidity();
+        this.updateQuantity(
+          index,
+          parsedValue,
+          event,
+          document.activeElement && document.activeElement.getAttribute('name'),
+          event.target.dataset.quantityVariantId
+        );
+      }
+    }
+
+    onChange(event) {
+      this.validateQuantity(event);
+    }
 
   onCartUpdate() {
     if (this.tagName === 'CART-DRAWER-ITEMS') {
@@ -291,4 +328,9 @@ if (!customElements.get('cart-note')) {
       }
     }
   );
+}
+}
+
+if (typeof window !== 'undefined') {
+  initializeCartComponents(window);
 }
