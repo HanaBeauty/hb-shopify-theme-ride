@@ -1,0 +1,61 @@
+.hb-benefits__summary,
+.hb-benefits-card__row {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.hb-benefits__price {
+  font-weight: 700;
+}
+
+.hb-benefits__installments,
+.hb-benefits__points {
+  margin-left: 0.25rem;
+}
+
+.hb-benefits__details {
+  margin-top: 0.5rem;
+}
+
+.hb-benefits__summary-button {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hb-benefits__table-wrap {
+  overflow-x: auto;
+}
+
+.hb-benefits__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.hb-benefits__table th,
+.hb-benefits__table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hb-benefits__table th {
+  text-align: left;
+}
+
+.hb-benefits__row--highlight {
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+@media (max-width: 640px) {
+  .hb-benefits__summary,
+  .hb-benefits-card__row {
+    font-size: 0.9rem;
+  }
+
+  .hb-benefits__table th:nth-child(3),
+  .hb-benefits__table td:nth-child(3) {
+    display: none;
+  }
+}

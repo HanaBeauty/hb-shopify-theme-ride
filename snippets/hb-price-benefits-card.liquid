@@ -1,0 +1,23 @@
+{%- comment -%}
+  Snippet: hb-price-benefits-card.liquid
+  Uso: em cards de produto nas vitrines Home/Categorias
+  Requisitos: product (objeto nativo Shopify)
+{%- endcomment -%}
+
+{%- assign price_cents = product.price_min | default: 0 -%}
+{%- assign points = price_cents | divided_by: 100 -%}
+{%- assign installment6_cents = price_cents | divided_by: 6 -%}
+
+<div class="hb-benefits-card" aria-label="Informações de pagamento e pontos">
+  <div class="hb-benefits-card__row">
+    <span class="hb-benefits-card__price">
+      {{ price_cents | money }}
+    </span>
+    <span class="hb-benefits-card__installments">
+      ou 6x de {{ installment6_cents | money }}
+    </span>
+    <span class="hb-benefits-card__points">
+      – Ganhe {{ points }} pontos
+    </span>
+  </div>
+</div>
