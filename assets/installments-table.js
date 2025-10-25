@@ -37,7 +37,11 @@
 
     if (!tableWrapper) return;
 
-    const shouldExpand = typeof expanded === 'boolean' ? expanded : tableWrapper.hasAttribute('hidden');
+    const isCurrentlyHidden = tableWrapper.hidden || tableWrapper.hasAttribute('hidden');
+    const shouldExpand =
+      typeof expanded === 'boolean' ? expanded : isCurrentlyHidden;
+
+    tableWrapper.hidden = !shouldExpand;
 
     if (shouldExpand) {
       tableWrapper.removeAttribute('hidden');
@@ -70,7 +74,6 @@
   }) {
     const summaryText = element.querySelector('[data-installments-summary]');
     const summaryFootnote = element.querySelector('[data-installments-summary-footnote]');
-    const disclaimer = element.querySelector('[data-installments-disclaimer]');
     const template = getSummaryTemplate(element, option);
 
     if (!summaryText) return;
@@ -84,22 +87,6 @@
 
     const shouldShowFootnote = !!option.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
-  }
-
-  function updatePoints(element, price) {
-    const pointsElement = element.querySelector('[data-installments-points]');
-
-    if (!pointsElement) return;
-
-    const template =
-      pointsElement.getAttribute('data-installments-points-template') ||
-      'Pontos: ganhe %points% pontos';
-    const points = Number.isFinite(price) ? Math.floor(Number(price) / 100) : 0;
-    const text = template.includes('%points%')
-      ? template.replace('%points%', points)
-      : template;
-
-    pointsElement.textContent = text;
   }
 
   function updatePoints(element, price) {
@@ -208,12 +195,17 @@
     const fallbackOption = config[config.length - 1];
     const optionForSummary = summaryOption || fallbackOption;
     const summaryValue = calculatePerInstallment(price, optionForSummary);
+    const disclaimer = element.querySelector('[data-installments-disclaimer]');
+    const hasInterestOption = config.some((installment) => !!installment.interest);
+
     updateSummary({
       element,
       option: optionForSummary,
       perInstallmentValue: summaryValue,
       moneyFormat,
     });
+
+    disclaimer?.toggleAttribute('hidden', !hasInterestOption);
 
     updatePoints(element, price);
   }
