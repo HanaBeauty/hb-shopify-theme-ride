@@ -1,0 +1,132 @@
+.hb-benefits__summary,
+.hb-benefits-card__row {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.hb-benefits__price {
+  font-weight: 700;
+}
+
+.hb-benefits__installments,
+.hb-benefits__points {
+  margin-left: 0.25rem;
+}
+
+.hb-benefits__details {
+  margin-top: 0.5rem;
+}
+
+.hb-benefits__summary-button {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hb-benefits__table-wrap {
+  overflow-x: auto;
+}
+
+.hb-benefits__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.hb-benefits__table th,
+.hb-benefits__table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hb-benefits__table th {
+  text-align: left;
+}
+
+.hb-benefits__row--highlight {
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+@media (max-width: 640px) {
+  .hb-benefits__summary,
+  .hb-benefits-card__row {
+    font-size: 0.9rem;
+  }
+
+  .hb-benefits__table th:nth-child(3),
+  .hb-benefits__table td:nth-child(3) {
+    display: none;
+  }
+}
+/* ===== Tipografia/Harmonia visual – segura e fluida (HB) ===== */
+
+/* Linha curta (preço + 6x + pontos) */
+.hb-benefits__summary,
+.hb-benefits-card__row{
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem); /* ~15.2px → 17px */
+  line-height: 1.45;
+}
+
+/* Destaca o preço no resumo */
+.hb-benefits__price,
+.hb-benefits-card__price{
+  font-weight: 700;
+}
+
+/* Complementos: levemente mais fortes e com melhor contraste */
+.hb-benefits__installments,
+.hb-benefits__points,
+.hb-benefits-card__installments,
+.hb-benefits-card__points{
+  font-weight: 500;
+  opacity: .95;
+  margin-left: .25rem;
+}
+
+/* <summary> do <details> */
+.hb-benefits__summary-button{
+  font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1rem);
+  text-underline-offset: 3px;
+}
+
+/* Tabela de parcelas */
+.hb-benefits__table{
+  font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
+}
+
+.hb-benefits__table th{
+  font-weight: 600;
+}
+
+.hb-benefits__table th,
+.hb-benefits__table td{
+  padding: .625rem .75rem; /* 10px 12px */
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+/* Destaque 6x sem juros */
+.hb-benefits__row--highlight{
+  background: rgba(0,0,0,.04);
+  font-weight: 700;
+}
+
+/* Zebra leve */
+.hb-benefits__table tr:nth-child(even){
+  background: rgba(0,0,0,.02);
+}
+
+/* Caption apenas para leitores de tela */
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* Mobile */
+@media (max-width: 640px){
+  /* Se quiser ocultar "Total" no mobile, descomente:
+  .hb-benefits__table th:nth-child(3),
+  .hb-benefits__table td:nth-child(3){ display:none; }
+  */
+  .hb-benefits__summary-button{ padding: .125rem 0; }
+}

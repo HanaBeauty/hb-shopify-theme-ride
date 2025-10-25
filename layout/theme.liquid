@@ -273,6 +273,7 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'hb-price-benefits.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
     {%- if settings.cart_type == 'drawer' -%}
@@ -492,7 +493,9 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-   <!-- Botão WhatsApp com Tracking (compacto no mobile) -->
+    {{ 'hb-price-benefits.js' | asset_url | script_tag }}
+
+    <!-- Botão WhatsApp com Tracking (compacto no mobile) -->
 <style>
   #whatsapp-button {
     position: fixed;

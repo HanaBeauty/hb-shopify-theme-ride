@@ -1,0 +1,53 @@
+{%- comment -%}
+  Snippet: hb-price-benefits-product.liquid
+  Uso: dentro da seção de produto (próximo ao preço)
+  Requisitos: product e, se possível, selected_or_first_available_variant
+{%- endcomment -%}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign price_cents = current_variant.price | default: product.price | default: 0 -%}
+{%- assign points = price_cents | divided_by: 100 -%}
+{%- assign installment6_cents = price_cents | divided_by: 6 -%}
+
+<div
+  class="hb-benefits"
+  data-hb-benefits
+  data-hb-price="{{ price_cents }}"
+  aria-live="polite"
+>
+  <p class="hb-benefits__summary">
+    <span class="hb-benefits__price">{{ price_cents | money | strip_html }}</span>
+    <span class="hb-benefits__installments"> ou 6x de {{ installment6_cents | money | strip_html }}</span>
+    <span class="hb-benefits__points"> e ganhe {{ points }} pontos</span>
+  </p>
+
+  <details class="hb-benefits__details">
+    <summary
+      class="hb-benefits__summary-button"
+      aria-controls="hb-benefits-table-{{ section.id | default: product.id }}"
+    >
+      Ver todas as parcelas
+    </summary>
+    <div class="hb-benefits__table-wrap">
+      <table
+        class="hb-benefits__table"
+        id="hb-benefits-table-{{ section.id | default: product.id }}"
+      >
+        <caption class="sr-only">
+          Tabela de parcelas de 1 a 12 vezes com juros progressivos a partir de 7x
+        </caption>
+        <thead>
+          <tr>
+            <th>Parcelas</th>
+            <th>Valor</th>
+            <th>Total</th>
+            <th>Juros</th>
+          </tr>
+        </thead>
+        <tbody data-hb-table-body>
+          {% comment %} O JS preenche as linhas 1–12 com base no preço atual {% endcomment %}
+        </tbody>
+      </table>
+    </div>
+  </details>
+</div>
