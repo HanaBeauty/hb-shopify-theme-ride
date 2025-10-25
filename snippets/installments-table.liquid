@@ -108,21 +108,6 @@
       </span>
       <span class="installments__summary-footnote" data-installments-summary-footnote{% if summary_option and summary_option.interest %}{% else %} hidden{% endif %}>*</span>
     </p>
-    <button
-      class="installments__toggle"
-      type="button"
-      data-installments-toggle
-      aria-expanded="true"
-      aria-controls="InstallmentsTableWrapper-{{ section.id }}"
-    >
-      <span data-installments-toggle-label-show hidden>{{ 'products.product.installments.toggle_open' | t }}</span>
-      <span data-installments-toggle-label-hide>{{ 'products.product.installments.toggle_close' | t }}</span>
-      <span class="installments__toggle-icon" data-installments-toggle-icon aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" role="presentation" focusable="false">
-          <path fill="currentColor" d="m12 15.5-7-7L6.5 7 12 12.5 17.5 7 19 8.5z" />
-        </svg>
-      </span>
-    </button>
   </div>
 
   <p
@@ -133,11 +118,7 @@
     Pontos: ganhe {{ reward_points }} pontos
   </p>
 
-  <div
-    class="installments__table-wrapper"
-    id="InstallmentsTableWrapper-{{ section.id }}"
-    data-installments-table-wrapper
-  >
+  <div class="installments__table-wrapper" data-installments-table-wrapper>
     <table class="installments-table" id="InstallmentsTable-{{ section.id }}">
       <thead>
         <tr>

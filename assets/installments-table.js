@@ -76,31 +76,6 @@
     return format ? format.replace('{{amount}}', value) : value;
   }
 
-  function toggleTable(element, expanded) {
-    const button = element.querySelector('[data-installments-toggle]');
-    const showLabel = element.querySelector('[data-installments-toggle-label-show]');
-    const hideLabel = element.querySelector('[data-installments-toggle-label-hide]');
-    const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
-
-    if (!tableWrapper) return;
-
-    const isCurrentlyHidden = tableWrapper.hidden || tableWrapper.hasAttribute('hidden');
-    const shouldExpand =
-      typeof expanded === 'boolean' ? expanded : isCurrentlyHidden;
-
-    tableWrapper.hidden = !shouldExpand;
-
-    if (shouldExpand) {
-      tableWrapper.removeAttribute('hidden');
-    } else {
-      tableWrapper.setAttribute('hidden', 'true');
-    }
-
-    button?.setAttribute('aria-expanded', shouldExpand ? 'true' : 'false');
-    showLabel?.toggleAttribute('hidden', shouldExpand);
-    hideLabel?.toggleAttribute('hidden', !shouldExpand);
-  }
-
   function getSummaryTemplate(element, option) {
     const hasInterest = !!option?.interest;
     if (hasInterest) {
@@ -281,24 +256,15 @@
     const initialPrice = Number.isFinite(parsedInitialPrice) ? parsedInitialPrice : 0;
     const tableHeadingInstallmentsEl = element.querySelector('[data-installments-table-heading-installments]');
     const tableHeadingValueEl = element.querySelector('[data-installments-table-heading-value]');
-    const toggleButton = element.querySelector('[data-installments-toggle]');
     const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
 
     tableHeadingInstallmentsEl && (tableHeadingInstallmentsEl.textContent = tableHeadingInstallments || '');
     tableHeadingValueEl && (tableHeadingValueEl.textContent = tableHeadingValue || '');
 
-    if (toggleButton) {
-      toggleButton.addEventListener('click', () => {
-        toggleTable(element);
-      });
+    if (tableWrapper) {
+      tableWrapper.hidden = false;
+      tableWrapper.removeAttribute('hidden');
     }
-
-    const buttonExpanded = toggleButton?.getAttribute('aria-expanded');
-    const initiallyExpanded =
-      buttonExpanded === 'true' ||
-      (tableWrapper && !tableWrapper.hidden && !tableWrapper.hasAttribute('hidden'));
-
-    toggleTable(element, initiallyExpanded);
 
     const sectionId = element.getAttribute('data-section');
 
