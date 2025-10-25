@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "info": {
+      "type": "info-page",
+      "settings": {
+        "show_page_title": true,
+        "heading_size": "h0",
+        "header_alignment": "left",
+        "show_navigation": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "info"
+  ]
+}
