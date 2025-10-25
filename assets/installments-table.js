@@ -93,6 +93,38 @@
     };
   }
 
+  function normaliseMoneyMarkup(value) {
+    if (value == null) return '';
+
+    const stringValue = typeof value === 'string' ? value : String(value);
+
+    return stringValue
+      .replace(/<span\b([^>]*)>/gi, (match, attributes) => {
+        if (!/hidewlm/i.test(attributes)) {
+          return match;
+        }
+
+        const cleanedAttributes = attributes.replace(/\s+hidewlm(=(["'])?[^"']*\2)?/gi, '');
+        const hasAriaHidden = /aria-hidden\s*=/i.test(cleanedAttributes);
+
+        if (hasAriaHidden) {
+          return `<span${cleanedAttributes}>`;
+        }
+
+        const spaceBeforeAria = cleanedAttributes.length === 0
+          ? ' '
+          : /\s$/.test(cleanedAttributes)
+          ? ''
+          : ' ';
+        const spaceAfterAria = cleanedAttributes.length === 0 || /^\s/.test(cleanedAttributes)
+          ? ''
+          : ' ';
+
+        return `<span${cleanedAttributes}${spaceBeforeAria}aria-hidden="true"${spaceAfterAria}>`;
+      })
+      .replace(/\s+hidewlm(=(["'])?[^"']*\2)?/gi, '');
+  }
+
   function normaliseConfigValue(value) {
     if (typeof value !== 'string') return '';
 
@@ -214,6 +246,12 @@
 
     const formatString =
       typeof moneyFormat === 'string' && moneyFormat.trim() ? moneyFormat : '{{amount}}';
+    const formattedValue = normaliseMoneyMarkup(
+      formatMoney(perInstallmentValue, formatString),
+    );
+    const fallbackCount = element.getAttribute('data-highlight-installment');
+    const count = option?.count ?? fallbackCount;
+    let summary = template.replace(/%count%/g, Number.isFinite(Number(count)) ? count : '');
     const formattedValue = formatMoney(perInstallmentValue, formatString);
     const fallbackCount = element.getAttribute('data-highlight-installment');
     const count = option?.count ?? fallbackCount;
@@ -227,7 +265,15 @@
       return formatMoney(perInstallmentValue, `{{${token}}}`);
     });
 
-    summaryText.textContent = summary;
+    if (summary.includes('%value%')) {
+      summary = summary.replace(/%value%/g, formattedValue);
+    }
+
+    summary = summary.replace(/\{\{\s*(amount[^}]*?)\s*\}\}/g, (_, token) => {
+      return normaliseMoneyMarkup(formatMoney(perInstallmentValue, `{{${token}}}`));
+    });
+
+    summaryText.innerHTML = normaliseMoneyMarkup(summary);
 
     const shouldShowFootnote = !!option?.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
@@ -288,7 +334,9 @@
 
     const valueCell = document.createElement('td');
     valueCell.className = 'installments-table__value';
-    valueCell.textContent = formatMoney(perInstallmentValue, moneyFormat);
+    valueCell.innerHTML = normaliseMoneyMarkup(
+      formatMoney(perInstallmentValue, moneyFormat),
+    );
 
     if (option.interest) {
       const footnote = document.createElement('span');
