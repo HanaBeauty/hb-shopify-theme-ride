@@ -1,0 +1,68 @@
+{% assign installment_options = '[{"count":1,"rate":0.0270,"interest":false},{"count":2,"rate":0.0497,"interest":false},{"count":3,"rate":0.0555,"interest":false},{"count":4,"rate":0.0617,"interest":false},{"count":5,"rate":0.0676,"interest":false},{"count":6,"rate":0.0734,"interest":false},{"count":7,"rate":0.0748,"interest":true},{"count":8,"rate":0.0810,"interest":true},{"count":9,"rate":0.0872,"interest":true},{"count":10,"rate":0.0917,"interest":true},{"count":11,"rate":0.0979,"interest":true},{"count":12,"rate":0.1042,"interest":true}]' | parse_json %}
+{% assign highest_option = installment_options | last %}
+{% assign highest_rate_multiplier = highest_option.rate | plus: 1 %}
+{% assign highest_installment_value = product.selected_or_first_available_variant.price | times: highest_rate_multiplier | divided_by: highest_option.count %}
+
+<div
+  class="installments"
+  data-installments
+  data-section="{{ section.id }}"
+  data-initial-price="{{ product.selected_or_first_available_variant.price }}"
+  data-installments-config='{{ installment_options | json | escape }}'
+  data-highlight-installment="6"
+  data-summary-template="{{ 'products.product.installments.summary' | t: count: '%count%', value: '%value%' }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-interest-label="{{ 'products.product.installments.with_interest' | t }}"
+  data-no-interest-label="{{ 'products.product.installments.without_interest' | t }}"
+  data-table-heading-installments="{{ 'products.product.installments.table_heading_installments' | t }}"
+  data-table-heading-value="{{ 'products.product.installments.table_heading_value' | t }}"
+>
+  <div class="installments__header">
+    <p class="installments__summary" aria-live="polite">
+      <span class="installments__summary-icon" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path
+            fill="currentColor"
+            d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 14H3V10h18zm0-12v2H3V6z"
+          />
+        </svg>
+      </span>
+      <span class="visually-hidden">{{ 'products.product.installments.icon_label' | t }}</span>
+      <span class="installments__summary-text" data-installments-summary>
+        {{ 'products.product.installments.summary' | t: count: highest_option.count, value: highest_installment_value | money }}
+      </span>
+      <span class="installments__summary-footnote" data-installments-summary-footnote{% unless highest_option.interest %} hidden{% endunless %}>*</span>
+    </p>
+    <button
+      class="installments__toggle"
+      type="button"
+      data-installments-toggle
+      aria-expanded="false"
+      aria-controls="InstallmentsTable-{{ section.id }}"
+    >
+      <span data-installments-toggle-label-show>{{ 'products.product.installments.toggle_open' | t }}</span>
+      <span data-installments-toggle-label-hide hidden>{{ 'products.product.installments.toggle_close' | t }}</span>
+      <span class="installments__toggle-icon" data-installments-toggle-icon aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" role="presentation" focusable="false">
+          <path fill="currentColor" d="m12 15.5-7-7L6.5 7 12 12.5 17.5 7 19 8.5z" />
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <div class="installments__table-wrapper" data-installments-table-wrapper hidden>
+    <table class="installments-table" id="InstallmentsTable-{{ section.id }}">
+      <thead>
+        <tr>
+          <th scope="col" data-installments-table-heading-installments></th>
+          <th scope="col" data-installments-table-heading-value></th>
+        </tr>
+      </thead>
+      <tbody data-installments-table-body></tbody>
+    </table>
+  </div>
+
+  <p class="installments__disclaimer" data-installments-disclaimer{% unless highest_option.interest %} hidden{% endunless %}>
+    {{ 'products.product.installments.interest_disclaimer' | t }}
+  </p>
+</div>

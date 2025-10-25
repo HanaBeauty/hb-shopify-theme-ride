@@ -179,7 +179,18 @@
       "taxes_included": "Taxes included.",
       "duties_included": "Duties included.",
       "duties_and_taxes_included": "Duties and taxes included.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout."
+      "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
+      "installments": {
+        "summary": "Up to %count%x of %value%",
+        "with_interest": "with interest",
+        "without_interest": "without interest",
+        "toggle_open": "Installments",
+        "toggle_close": "Hide",
+        "table_heading_installments": "Installments",
+        "table_heading_value": "Value",
+        "icon_label": "Installment options",
+        "interest_disclaimer": "Values marked with * include interest."
+      }
     },
     "modal": {
       "label": "Media gallery"
