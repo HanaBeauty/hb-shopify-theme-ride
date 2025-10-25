@@ -4,7 +4,7 @@
 }
 
 .info-page__header {
-  max-width: 68rem;
+  max-width: min(90rem, 100%);
   margin: 0 auto;
 }
 
@@ -42,7 +42,7 @@
 .info-page__callouts {
   display: grid;
   gap: 1.6rem;
-  max-width: 68rem;
+  max-width: min(90rem, 100%);
   margin: 0 auto;
 }
 
@@ -86,7 +86,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  max-width: 68rem;
+  max-width: min(90rem, 100%);
   margin: 0 auto;
 }
 
@@ -149,8 +149,9 @@
 }
 
 .info-page__content {
-  max-width: 68rem;
+  max-width: min(90rem, 100%);
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .info-page__content > *:first-child {
@@ -239,6 +240,7 @@
 
   .info-page__content {
     margin: 0;
+    padding: 0;
   }
 }
 
