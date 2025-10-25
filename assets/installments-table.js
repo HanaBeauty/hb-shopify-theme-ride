@@ -126,13 +126,15 @@
     if (!summaryText) return;
 
     const formattedValue = formatMoney(perInstallmentValue, moneyFormat);
+    const fallbackCount = element.getAttribute('data-highlight-installment');
+    const count = option?.count ?? fallbackCount;
     const summary = template
-      .replace('%count%', option.count)
+      .replace('%count%', Number.isFinite(Number(count)) ? count : '')
       .replace('%value%', formattedValue);
 
     summaryText.textContent = summary;
 
-    const shouldShowFootnote = !!option.interest;
+    const shouldShowFootnote = !!option?.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
   }
 
@@ -217,23 +219,25 @@
     const moneyFormat = element.getAttribute('data-money-format') || '';
     const highlight = element.getAttribute('data-highlight-installment');
 
-    if (!Array.isArray(config) || !config.length || !tableBody) {
+    if (!Array.isArray(config) || !config.length) {
       return;
     }
 
-    tableBody.innerHTML = '';
+    if (tableBody) {
+      tableBody.innerHTML = '';
 
-    config.forEach((option) => {
-      const perInstallmentValue = calculatePerInstallment(price, option);
-      const row = createRow({
-        element,
-        option,
-        perInstallmentValue,
-        moneyFormat,
-        highlight,
+      config.forEach((option) => {
+        const perInstallmentValue = calculatePerInstallment(price, option);
+        const row = createRow({
+          element,
+          option,
+          perInstallmentValue,
+          moneyFormat,
+          highlight,
+        });
+        tableBody.appendChild(row);
       });
-      tableBody.appendChild(row);
-    });
+    }
 
     const highlightInstallment = Number(highlight);
     const summaryOption = Number.isFinite(highlightInstallment)
