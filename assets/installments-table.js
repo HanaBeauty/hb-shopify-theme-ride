@@ -3,75 +3,11 @@
 
   if (typeof window === 'undefined') return;
 
+  window.Shopify = window.Shopify || {};
+
   const activeInstances = new WeakMap();
 
-  function normaliseConfigValue(value) {
-    if (typeof value !== 'string') return '';
-
-    return value
-      .replace(/&quot;/g, '"')
-      .replace(/&#34;/g, '"')
-      .replace(/&#x22;/gi, '"')
-      .trim();
-  }
-
-  function ensureArray(config) {
-    if (!config) return [];
-
-    return Array.isArray(config) ? config : [config];
-  }
-
-  function parseConfig(element) {
-    const scriptConfig = element.querySelector('script[data-installments-config]');
-
-    if (scriptConfig) {
-      const scriptValue = scriptConfig.textContent?.trim();
-
-      if (scriptValue) {
-        try {
-          return ensureArray(JSON.parse(scriptValue));
-        } catch (error) {
-          console.warn('Unable to parse installments configuration from script', error);
-        }
-      }
-    }
-
-    const rawConfig = normaliseConfigValue(
-      element.getAttribute('data-installments-config') ||
-        element.dataset.installmentsConfig,
-    );
-
-    if (!rawConfig) {
-      return [];
-    }
-
-    try {
-      return ensureArray(JSON.parse(rawConfig));
-    } catch (error) {
-      try {
-        return ensureArray(JSON.parse(normaliseConfigValue(rawConfig)));
-      } catch (fallbackError) {
-        console.warn('Unable to parse installments configuration', fallbackError);
-        return [];
-      }
-    }
-  }
-
-  function getConfig(element) {
-    if (!element) return [];
-
-    if (!element.__installmentsConfig) {
-      element.__installmentsConfig = parseConfig(element);
-    }
-
-    return element.__installmentsConfig;
-  }
-
-  function formatMoney(cents, format) {
-    if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
-      return Shopify.formatMoney(cents, format);
-    }
-
+  function fallbackFormatMoney(cents, format) {
     const formatString = typeof format === 'string' && format.trim() ? format : '{{amount}}';
     const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
     const match = formatString.match(placeholderRegex);
@@ -151,6 +87,114 @@
     return formatString.replace(placeholderRegex, formattedValue);
   }
 
+  if (typeof window.Shopify.formatMoney !== 'function') {
+    window.Shopify.formatMoney = function (cents, format) {
+      return fallbackFormatMoney(cents, format);
+    };
+  }
+
+  function normaliseMoneyMarkup(value) {
+    if (value == null) return '';
+
+    const stringValue = typeof value === 'string' ? value : String(value);
+
+    return stringValue
+      .replace(/<span\b([^>]*)>/gi, (match, attributes) => {
+        if (!/hidewlm/i.test(attributes)) {
+          return match;
+        }
+
+        const cleanedAttributes = attributes.replace(/\s+hidewlm(=(["'])?[^"']*\2)?/gi, '');
+        const hasAriaHidden = /aria-hidden\s*=/i.test(cleanedAttributes);
+
+        if (hasAriaHidden) {
+          return `<span${cleanedAttributes}>`;
+        }
+
+        const spaceBeforeAria = cleanedAttributes.length === 0
+          ? ' '
+          : /\s$/.test(cleanedAttributes)
+          ? ''
+          : ' ';
+        const spaceAfterAria = cleanedAttributes.length === 0 || /^\s/.test(cleanedAttributes)
+          ? ''
+          : ' ';
+
+        return `<span${cleanedAttributes}${spaceBeforeAria}aria-hidden="true"${spaceAfterAria}>`;
+      })
+      .replace(/\s+hidewlm(=(["'])?[^"']*\2)?/gi, '');
+  }
+
+  function normaliseConfigValue(value) {
+    if (typeof value !== 'string') return '';
+
+    return value
+      .replace(/&quot;/g, '"')
+      .replace(/&#34;/g, '"')
+      .replace(/&#x22;/gi, '"')
+      .trim();
+  }
+
+  function ensureArray(config) {
+    if (!config) return [];
+
+    return Array.isArray(config) ? config : [config];
+  }
+
+  function parseConfig(element) {
+    const scriptConfig = element.querySelector('script[data-installments-config]');
+
+    if (scriptConfig) {
+      const scriptValue = scriptConfig.textContent?.trim();
+
+      if (scriptValue) {
+        try {
+          return ensureArray(JSON.parse(scriptValue));
+        } catch (error) {
+          console.warn('Unable to parse installments configuration from script', error);
+        }
+      }
+    }
+
+    const rawConfig = normaliseConfigValue(
+      element.getAttribute('data-installments-config') ||
+        element.dataset.installmentsConfig,
+    );
+
+    if (!rawConfig) {
+      return [];
+    }
+
+    try {
+      return ensureArray(JSON.parse(rawConfig));
+    } catch (error) {
+      try {
+        return ensureArray(JSON.parse(normaliseConfigValue(rawConfig)));
+      } catch (fallbackError) {
+        console.warn('Unable to parse installments configuration', fallbackError);
+        return [];
+      }
+    }
+  }
+
+  function getConfig(element) {
+    if (!element) return [];
+
+    if (!element.__installmentsConfig) {
+      element.__installmentsConfig = parseConfig(element);
+    }
+
+    return element.__installmentsConfig;
+  }
+
+  function formatMoney(cents, format) {
+    if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+      return Shopify.formatMoney(cents, format);
+    }
+
+    return fallbackFormatMoney(cents, format);
+  }
+
   function toggleTable(element, expanded) {
     const button = element.querySelector('[data-installments-toggle]');
     const showLabel = element.querySelector('[data-installments-toggle-label-show]');
@@ -200,14 +244,24 @@
 
     if (!summaryText) return;
 
-    const formattedValue = formatMoney(perInstallmentValue, moneyFormat);
+    const formatString =
+      typeof moneyFormat === 'string' && moneyFormat.trim() ? moneyFormat : '{{amount}}';
+    const formattedValue = normaliseMoneyMarkup(
+      formatMoney(perInstallmentValue, formatString),
+    );
     const fallbackCount = element.getAttribute('data-highlight-installment');
     const count = option?.count ?? fallbackCount;
-    const summary = template
-      .replace('%count%', Number.isFinite(Number(count)) ? count : '')
-      .replace('%value%', formattedValue);
+    let summary = template.replace(/%count%/g, Number.isFinite(Number(count)) ? count : '');
 
-    summaryText.textContent = summary;
+    if (summary.includes('%value%')) {
+      summary = summary.replace(/%value%/g, formattedValue);
+    }
+
+    summary = summary.replace(/\{\{\s*(amount[^}]*?)\s*\}\}/g, (_, token) => {
+      return normaliseMoneyMarkup(formatMoney(perInstallmentValue, `{{${token}}}`));
+    });
+
+    summaryText.innerHTML = normaliseMoneyMarkup(summary);
 
     const shouldShowFootnote = !!option?.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
@@ -268,7 +322,9 @@
 
     const valueCell = document.createElement('td');
     valueCell.className = 'installments-table__value';
-    valueCell.textContent = formatMoney(perInstallmentValue, moneyFormat);
+    valueCell.innerHTML = normaliseMoneyMarkup(
+      formatMoney(perInstallmentValue, moneyFormat),
+    );
 
     if (option.interest) {
       const footnote = document.createElement('span');

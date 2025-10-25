@@ -25,7 +25,7 @@
 {% assign highlight_installment_value = summary_adjusted_total | divided_by: summary_double_count %}
 {% assign reward_points = variant_price | divided_by: 100 | floor %}
 {% capture summary_text %}
-  Parcelas: até {{ summary_installment_count }}x sem juros de {{ highlight_installment_value | money }}
+  Parcelas: até {{ summary_installment_count }}x sem juros de {{ highlight_installment_value | money | replace: 'hidewlm', 'aria-hidden="true"' }}
 {% endcapture %}
 
 <div
@@ -36,7 +36,7 @@
   data-installments-config='{{ installment_options | json }}'
   data-highlight-installment="{{ highlight_installment }}"
   data-summary-template="Parcelas: até %count%x sem juros de %value%"
-  data-money-format="{{ shop.money_format | escape }}"
+  data-money-format='{{ shop.money_format | replace: "hidewlm", "aria-hidden=\"true\"" | replace: "'", "&#39;" }}'
   data-interest-label="{{ 'products.product.installments.with_interest' | t }}"
   data-no-interest-label="{{ 'products.product.installments.without_interest' | t }}"
   data-table-heading-installments="{{ 'products.product.installments.table_heading_installments' | t }}"
