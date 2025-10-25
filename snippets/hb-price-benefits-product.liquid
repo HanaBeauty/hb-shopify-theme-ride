@@ -30,24 +30,24 @@
     </summary>
     <div class="hb-benefits__table-wrap">
       <table
-        class="hb-benefits__table"
-        id="hb-benefits-table-{{ section.id | default: product.id }}"
-      >
-        <caption class="sr-only">
-          Tabela de parcelas de 1 a 12 vezes com juros progressivos a partir de 7x
-        </caption>
-        <thead>
-          <tr>
-            <th>Parcelas</th>
-            <th>Valor</th>
-            <th>Total</th>
-            <th>Juros</th>
-          </tr>
-        </thead>
-        <tbody data-hb-table-body>
-          {% comment %} O JS preenche as linhas 1–12 com base no preço atual {% endcomment %}
-        </tbody>
-      </table>
+  class="hb-benefits__table"
+  id="hb-benefits-table-{{ section.id | default: product.id }}"
+>
+  <caption class="sr-only">
+    Tabela de parcelas de 1 a 12 vezes com juros progressivos a partir de 7x
+  </caption>
+  <thead>
+    <tr>
+      <th>Parcelas</th>
+      <th>Valor</th>
+      <th>Total</th>
+      <th>Juros</th>
+    </tr>
+  </thead>
+  <tbody data-hb-table-body>
+    {% comment %} JS preenche as linhas 1–12 com base no preço atual {% endcomment %}
+  </tbody>
+</table>
     </div>
   </details>
 </div>
