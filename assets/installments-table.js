@@ -77,6 +77,22 @@
     disclaimer?.toggleAttribute('hidden', !shouldShowFootnote);
   }
 
+  function updatePoints(element, price) {
+    const pointsElement = element.querySelector('[data-installments-points]');
+
+    if (!pointsElement) return;
+
+    const template =
+      pointsElement.getAttribute('data-installments-points-template') ||
+      'Pontos: ganhe %points% pontos';
+    const points = Number.isFinite(price) ? Math.floor(Number(price) / 100) : 0;
+    const text = template.includes('%points%')
+      ? template.replace('%points%', points)
+      : template;
+
+    pointsElement.textContent = text;
+  }
+
   function createRow({ element, option, perInstallmentValue, moneyFormat, highlight }) {
     const interestLabel = element.getAttribute('data-interest-label') || '';
     const noInterestLabel = element.getAttribute('data-no-interest-label') || '';
@@ -144,14 +160,21 @@
       tableBody.appendChild(row);
     });
 
-    const lastOption = config[config.length - 1];
-    const summaryValue = calculatePerInstallment(price, lastOption);
+    const highlightInstallment = Number(highlight);
+    const summaryOption = Number.isFinite(highlightInstallment)
+      ? config.find((option) => Number(option.count) === highlightInstallment)
+      : undefined;
+    const fallbackOption = config[config.length - 1];
+    const optionForSummary = summaryOption || fallbackOption;
+    const summaryValue = calculatePerInstallment(price, optionForSummary);
     updateSummary({
       element,
-      option: lastOption,
+      option: optionForSummary,
       perInstallmentValue: summaryValue,
       moneyFormat,
     });
+
+    updatePoints(element, price);
   }
 
   function handleVariantChange(element, price) {
