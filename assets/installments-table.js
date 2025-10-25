@@ -72,8 +72,83 @@
       return Shopify.formatMoney(cents, format);
     }
 
-    const value = (cents / 100).toFixed(2);
-    return format ? format.replace('{{amount}}', value) : value;
+    const formatString = typeof format === 'string' && format.trim() ? format : '{{amount}}';
+    const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    const match = formatString.match(placeholderRegex);
+
+    const normalizeCents = (value) => {
+      if (typeof value === 'number' && Number.isFinite(value)) {
+        return value;
+      }
+
+      if (typeof value === 'string') {
+        const sanitized = value.replace(',', '.').replace(/[^0-9.-]/g, '');
+        const parsed = Number(sanitized);
+
+        if (Number.isFinite(parsed)) {
+          return sanitized.includes('.') ? Math.round(parsed * 100) : parsed;
+        }
+      }
+
+      return NaN;
+    };
+
+    const amountInCents = normalizeCents(cents);
+
+    if (!match || !Number.isFinite(amountInCents)) {
+      return formatString;
+    }
+
+    const placeholder = match[1];
+
+    const formatWithDelimiters = (
+      amount,
+      precision = 2,
+      thousandsSeparator = ',',
+      decimalSeparator = '.',
+    ) => {
+      if (!Number.isFinite(amount)) return '';
+
+      const fixedNumber = (amount / 100).toFixed(precision);
+      const [integerPart, decimalPart] = fixedNumber.split('.');
+      const withThousands = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+
+      if (precision === 0) {
+        return withThousands;
+      }
+
+      return decimalPart ? `${withThousands}${decimalSeparator}${decimalPart}` : withThousands;
+    };
+
+    let formattedValue;
+
+    switch (placeholder) {
+      case 'amount':
+        formattedValue = formatWithDelimiters(amountInCents, 2);
+        break;
+      case 'amount_no_decimals':
+        formattedValue = formatWithDelimiters(amountInCents, 0);
+        break;
+      case 'amount_with_comma_separator':
+        formattedValue = formatWithDelimiters(amountInCents, 2, '.', ',');
+        break;
+      case 'amount_no_decimals_with_comma_separator':
+        formattedValue = formatWithDelimiters(amountInCents, 0, '.', ',');
+        break;
+      case 'amount_with_apostrophe_separator':
+        formattedValue = formatWithDelimiters(amountInCents, 2, "'", '.');
+        break;
+      case 'amount_no_decimals_with_space_separator':
+        formattedValue = formatWithDelimiters(amountInCents, 0, ' ', ',');
+        break;
+      case 'amount_with_space_separator':
+        formattedValue = formatWithDelimiters(amountInCents, 2, ' ', ',');
+        break;
+      default:
+        formattedValue = formatWithDelimiters(amountInCents, 2);
+    }
+
+    return formatString.replace(placeholderRegex, formattedValue);
   }
 
   function toggleTable(element, expanded) {
@@ -126,13 +201,15 @@
     if (!summaryText) return;
 
     const formattedValue = formatMoney(perInstallmentValue, moneyFormat);
+    const fallbackCount = element.getAttribute('data-highlight-installment');
+    const count = option?.count ?? fallbackCount;
     const summary = template
-      .replace('%count%', option.count)
+      .replace('%count%', Number.isFinite(Number(count)) ? count : '')
       .replace('%value%', formattedValue);
 
     summaryText.textContent = summary;
 
-    const shouldShowFootnote = !!option.interest;
+    const shouldShowFootnote = !!option?.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
   }
 
@@ -217,23 +294,25 @@
     const moneyFormat = element.getAttribute('data-money-format') || '';
     const highlight = element.getAttribute('data-highlight-installment');
 
-    if (!Array.isArray(config) || !config.length || !tableBody) {
+    if (!Array.isArray(config) || !config.length) {
       return;
     }
 
-    tableBody.innerHTML = '';
+    if (tableBody) {
+      tableBody.innerHTML = '';
 
-    config.forEach((option) => {
-      const perInstallmentValue = calculatePerInstallment(price, option);
-      const row = createRow({
-        element,
-        option,
-        perInstallmentValue,
-        moneyFormat,
-        highlight,
+      config.forEach((option) => {
+        const perInstallmentValue = calculatePerInstallment(price, option);
+        const row = createRow({
+          element,
+          option,
+          perInstallmentValue,
+          moneyFormat,
+          highlight,
+        });
+        tableBody.appendChild(row);
       });
-      tableBody.appendChild(row);
-    });
+    }
 
     const highlightInstallment = Number(highlight);
     const summaryOption = Number.isFinite(highlightInstallment)
