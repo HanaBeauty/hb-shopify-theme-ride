@@ -35,6 +35,8 @@
     const hideLabel = element.querySelector('[data-installments-toggle-label-hide]');
     const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
 
+    if (!tableWrapper) return;
+
     const shouldExpand = typeof expanded === 'boolean' ? expanded : tableWrapper.hasAttribute('hidden');
 
     if (shouldExpand) {
@@ -82,7 +84,22 @@
 
     const shouldShowFootnote = !!option.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
-    disclaimer?.toggleAttribute('hidden', !shouldShowFootnote);
+  }
+
+  function updatePoints(element, price) {
+    const pointsElement = element.querySelector('[data-installments-points]');
+
+    if (!pointsElement) return;
+
+    const template =
+      pointsElement.getAttribute('data-installments-points-template') ||
+      'Pontos: ganhe %points% pontos';
+    const points = Number.isFinite(price) ? Math.floor(Number(price) / 100) : 0;
+    const text = template.includes('%points%')
+      ? template.replace('%points%', points)
+      : template;
+
+    pointsElement.textContent = text;
   }
 
   function updatePoints(element, price) {
@@ -226,6 +243,7 @@
     const tableHeadingInstallmentsEl = element.querySelector('[data-installments-table-heading-installments]');
     const tableHeadingValueEl = element.querySelector('[data-installments-table-heading-value]');
     const toggleButton = element.querySelector('[data-installments-toggle]');
+    const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
 
     tableHeadingInstallmentsEl && (tableHeadingInstallmentsEl.textContent = tableHeadingInstallments || '');
     tableHeadingValueEl && (tableHeadingValueEl.textContent = tableHeadingValue || '');
@@ -235,6 +253,9 @@
         toggleTable(element);
       });
     }
+
+    const initiallyExpanded = tableWrapper && !tableWrapper.hasAttribute('hidden');
+    toggleTable(element, initiallyExpanded);
 
     const sectionId = element.getAttribute('data-section');
 

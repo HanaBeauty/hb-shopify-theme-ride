@@ -67,11 +67,11 @@
       class="installments__toggle"
       type="button"
       data-installments-toggle
-      aria-expanded="false"
+      aria-expanded="true"
       aria-controls="InstallmentsTable-{{ section.id }}"
     >
-      <span data-installments-toggle-label-show>{{ 'products.product.installments.toggle_open' | t }}</span>
-      <span data-installments-toggle-label-hide hidden>{{ 'products.product.installments.toggle_close' | t }}</span>
+      <span data-installments-toggle-label-show hidden>{{ 'products.product.installments.toggle_open' | t }}</span>
+      <span data-installments-toggle-label-hide>{{ 'products.product.installments.toggle_close' | t }}</span>
       <span class="installments__toggle-icon" data-installments-toggle-icon aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" role="presentation" focusable="false">
           <path fill="currentColor" d="m12 15.5-7-7L6.5 7 12 12.5 17.5 7 19 8.5z" />
@@ -92,11 +92,17 @@
     <table class="installments-table" id="InstallmentsTable-{{ section.id }}">
       <thead>
         <tr>
-          <th scope="col" data-installments-table-heading-installments></th>
-          <th scope="col" data-installments-table-heading-value></th>
+          <th scope="col" data-installments-table-heading-installments>
+            {{ 'products.product.installments.table_heading_installments' | t }}
+          </th>
+          <th scope="col" data-installments-table-heading-value>
+            {{ 'products.product.installments.table_heading_value' | t }}
+          </th>
         </tr>
       </thead>
-      <tbody data-installments-table-body></tbody>
+      <tbody data-installments-table-body>
+        {{ installments_table_rows | strip }}
+      </tbody>
     </table>
   </div>
 
