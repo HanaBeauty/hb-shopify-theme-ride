@@ -18,7 +18,11 @@
   {% assign summary_option = installment_options | last %}
 {% endif %}
 {% assign summary_installment_count = summary_option.count | default: highlight_installment %}
-{% assign highlight_installment_value = variant_price | divided_by: summary_installment_count %}
+{% assign summary_total_price = variant_price %}
+{% assign summary_double_total = summary_total_price | times: 2 %}
+{% assign summary_adjusted_total = summary_double_total | plus: summary_installment_count %}
+{% assign summary_double_count = summary_installment_count | times: 2 %}
+{% assign highlight_installment_value = summary_adjusted_total | divided_by: summary_double_count %}
 {% assign reward_points = variant_price | divided_by: 100 | floor %}
 {% capture summary_text %}
   Parcelas: até {{ summary_installment_count }}x sem juros de {{ highlight_installment_value | money }}
