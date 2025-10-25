@@ -119,7 +119,23 @@
 
     const interestSpan = document.createElement('span');
     interestSpan.className = 'installments-table__interest';
-    interestSpan.textContent = option.interest ? interestLabel : noInterestLabel;
+    const fallbackInterestLabel = interestLabel || 'Com juros';
+    const fallbackNoInterestLabel = noInterestLabel || 'Sem juros';
+
+    const interestRate = Number(option.rate);
+    if (option.interest) {
+      const formattedRate = Number.isFinite(interestRate)
+        ? (interestRate * 100).toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : null;
+      const label = interestLabel || fallbackInterestLabel;
+      const rateLabel = formattedRate ? ` (${formattedRate}%)` : '';
+      interestSpan.textContent = `${label}${rateLabel}`.trim() || rateLabel.trim();
+    } else {
+      interestSpan.textContent = fallbackNoInterestLabel;
+    }
     installmentCell.appendChild(interestSpan);
 
     const valueCell = document.createElement('td');
@@ -128,7 +144,7 @@
 
     if (option.interest) {
       const footnote = document.createElement('span');
-      footnote.className = 'installments__summary-footnote';
+      footnote.className = 'installments-table__footnote';
       footnote.textContent = '*';
       valueCell.appendChild(footnote);
     }
