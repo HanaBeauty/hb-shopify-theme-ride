@@ -48,7 +48,15 @@
     hideLabel?.toggleAttribute('hidden', !shouldExpand);
   }
 
-  function getSummaryTemplate(element) {
+  function getSummaryTemplate(element, option) {
+    const hasInterest = !!option?.interest;
+    if (hasInterest) {
+      const interestTemplate = element.getAttribute('data-summary-template-interest');
+      if (interestTemplate) {
+        return interestTemplate;
+      }
+    }
+
     return element.getAttribute('data-summary-template') || '';
   }
 
@@ -61,7 +69,7 @@
     const summaryText = element.querySelector('[data-installments-summary]');
     const summaryFootnote = element.querySelector('[data-installments-summary-footnote]');
     const disclaimer = element.querySelector('[data-installments-disclaimer]');
-    const template = getSummaryTemplate(element);
+    const template = getSummaryTemplate(element, option);
 
     if (!summaryText) return;
 
@@ -111,7 +119,23 @@
 
     const interestSpan = document.createElement('span');
     interestSpan.className = 'installments-table__interest';
-    interestSpan.textContent = option.interest ? interestLabel : noInterestLabel;
+    const fallbackInterestLabel = interestLabel || 'Com juros';
+    const fallbackNoInterestLabel = noInterestLabel || 'Sem juros';
+
+    const interestRate = Number(option.rate);
+    if (option.interest) {
+      const formattedRate = Number.isFinite(interestRate)
+        ? (interestRate * 100).toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : null;
+      const label = interestLabel || fallbackInterestLabel;
+      const rateLabel = formattedRate ? ` (${formattedRate}%)` : '';
+      interestSpan.textContent = `${label}${rateLabel}`.trim() || rateLabel.trim();
+    } else {
+      interestSpan.textContent = fallbackNoInterestLabel;
+    }
     installmentCell.appendChild(interestSpan);
 
     const valueCell = document.createElement('td');
@@ -120,7 +144,7 @@
 
     if (option.interest) {
       const footnote = document.createElement('span');
-      footnote.className = 'installments__summary-footnote';
+      footnote.className = 'installments-table__footnote';
       footnote.textContent = '*';
       valueCell.appendChild(footnote);
     }
