@@ -15,6 +15,7 @@
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'component-installments-table.css' | asset_url | stylesheet_tag }}
 
   {% unless product.has_only_default_variant %}
     {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
@@ -41,6 +42,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'installments-table.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -99,11 +101,6 @@
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
-                  <a href="{{ product.url }}" class="product__title">
-                    <h2 class="h1">
-                      {{ product.title | escape }}
-                    </h2>
-                  </a>
                 </div>
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
@@ -114,190 +111,7 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-              <!-- INICIO - PARCELAMENTO DINÂMICO COM JUROS PERSONALIZADOS -->
-<style>
-#tabela-parcelamento-h2b {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  color: #333;
-  margin-top: 10px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px #f1f1f1;
-}
-
-#tabela-parcelamento-h2b th {
-  background-color: #f8f8f8;
-  color: #222;
-  font-weight: 600;
-  text-align: left;
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-#tabela-parcelamento-h2b td {
-  padding: 10px;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-#tabela-parcelamento-h2b tr:last-child td {
-  border-bottom: none;
-}
-
-#tabela-parcelamento-h2b .vezes {
-  font-weight: 500;
-  color: #444;
-}
-
-#tabela-parcelamento-h2b .juros {
-  font-size: 12px;
-  font-weight: 400;
-  color: #999;
-  margin-left: 4px;
-}
-
-#tabela-parcelamento-h2b tr.destaque {
-  background-color: #fff5f9;
-  font-weight: 600;
-  color: #c91c57;
-}
-
-.toggle-button {
-  background-color: transparent;
-  color: #c91c57;
-  font-weight: 600;
-  font-size: 14px;
-  border: none;
-  cursor: pointer;
-  padding: 4px 8px;
-}
-
-.toggle-button:hover {
-  text-decoration: underline;
-}
-
-.parcelamento {
-  font-size: 16px;
-  margin: 2px 0 0 0; /* <-- Reduz a margem superior */
-  color: #222;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  align-items: baseline;
-}
-
-.parcelamento i {
-  color: #c91c57;
-}
-
-.tabela {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.fade-in {
-  animation: fade-in 0.4s ease-in-out;
-}
-</style>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const tabela = document.getElementById("tabela-parcelamento-h2b");
-  const expand = document.getElementById("expand-button");
-  const hide = document.getElementById("hide-button");
-
-  expand.addEventListener("click", function () {
-    tabela.style.display = "table";
-    tabela.classList.add("fade-in");
-    expand.style.display = "none";
-    hide.style.display = "inline-block";
-  });
-
-  hide.addEventListener("click", function () {
-    tabela.style.display = "none";
-    tabela.classList.remove("fade-in");
-    hide.style.display = "none";
-    expand.style.display = "inline-block";
-  });
-
-  // Gerar dinamicamente as linhas de parcelamento
-  const tbody = tabela.querySelector("tbody");
-  const precoProduto = {{ product.price | money_without_currency | replace: ',', '.' }};
-  const parcelas = [
-    { vezes: 1, taxa: 0.0270, juros: false },
-    { vezes: 2, taxa: 0.0497, juros: false },
-    { vezes: 3, taxa: 0.0555, juros: false },
-    { vezes: 4, taxa: 0.0617, juros: false },
-    { vezes: 5, taxa: 0.0676, juros: false },
-    { vezes: 6, taxa: 0.0734, juros: false },
-    { vezes: 7, taxa: 0.0748, juros: true },
-    { vezes: 8, taxa: 0.0810, juros: true },
-    { vezes: 9, taxa: 0.0872, juros: true },
-    { vezes: 10, taxa: 0.0917, juros: true },
-    { vezes: 11, taxa: 0.0979, juros: true },
-    { vezes: 12, taxa: 0.1042, juros: true }
-  ];
-
-  parcelas.forEach(p => {
-    const tr = document.createElement("tr");
-    // Destaque na melhor condição (última sem juros)
-  if (p.vezes === 6) tr.classList.add("destaque");
-    const tdParcela = document.createElement("td");
-    const tdValor = document.createElement("td");
-
-    const textoJuros = p.juros ? "com juros" : "sem juros";
-    tdParcela.className = "vezes";
-    tdParcela.innerHTML = `${p.vezes}x <span class="juros">${textoJuros}</span>`;
-
-    let valorParcela;
-    if (p.juros) {
-      const valorComJuros = precoProduto * (1 + p.taxa);
-      valorParcela = valorComJuros / p.vezes;
-    } else {
-      valorParcela = precoProduto / p.vezes;
-    }
-
-    tdValor.textContent = `R$ ${valorParcela.toFixed(2).replace(".", ",")}${p.juros ? "*" : ""}`;
-
-    tr.appendChild(tdParcela);
-    tr.appendChild(tdValor);
-    tbody.appendChild(tr);
-  });
-});
-</script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<div>
-  <div class="tabela">
-    <div>
-      <p class="parcelamento">
-        <i class="fa fa-credit-card"></i>
-        Em até 12x de 
-        <span style="font-size:20px; color: black;"><b>
-          R$ {{ product.price | times: 1.1042 | divided_by: 12 | money }}
-        </b></span>
-      </p>
-    </div>
-    <button id="expand-button" class="toggle-button">Parcelas <i class="fa fa-chevron-down"></i></button>
-    <button id="hide-button" class="toggle-button" style="display: none;">Ocultar <i class="fa fa-chevron-up"></i></button>
-  </div>
-
-  <table id="tabela-parcelamento-h2b" class="fade-in" style="display: none;">
-    <thead><tr><th>Parcelas</th><th>Valor</th></tr></thead>
-    <tbody></tbody>
-  </table>
-</div>
-<!-- FIM - PARCELAMENTO DINÂMICO -->
+                  {% render 'installments-table', product: product, section: section %}
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
