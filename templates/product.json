@@ -40,13 +40,6 @@
           "type": "price",
           "settings": {}
         },
-        "custom_liquid_eWfEHL": {
-          "type": "custom_liquid",
-          "disabled": true,
-          "settings": {
-            "custom_liquid": "<p id=\"pontos-recompensa\" class=\"loyalty\" style=\"margin: 0 0 10px 0; font-size: 14px; background: #f6f6f6; color: #444; padding: 8px 12px; border-radius: 6px;\">\n  <!-- Pontuação aparecerá aqui -->\n</p>\n\n<script>\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n  const precoBruto = {{ product.compare_at_price | money_without_currency | default: 0 | replace: \",\", \".\" }};\n  const precoFinal = {{ product.price | money_without_currency | replace: \",\", \".\" }};\n\n  const valorBase = precoFinal > 0 ? precoFinal : precoBruto;\n  const pontos = Math.round(valorBase);\n\n  const elemento = document.getElementById(\"pontos-recompensa\");\n  if (elemento && valorBase > 0) {\n    elemento.textContent = `Você ganhará ${pontos} pontos nesta compra.`;\n  }\n});\n</script>"
-          }
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -146,7 +139,6 @@
         "judge_me_reviews_preview_badge_fpadGQ",
         "collapsible_tab_pg8Wjy",
         "price",
-        "custom_liquid_eWfEHL",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
