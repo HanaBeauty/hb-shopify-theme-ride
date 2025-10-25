@@ -5,19 +5,66 @@
 
   const activeInstances = new WeakMap();
 
+  function normaliseConfigValue(value) {
+    if (typeof value !== 'string') return '';
+
+    return value
+      .replace(/&quot;/g, '"')
+      .replace(/&#34;/g, '"')
+      .replace(/&#x22;/gi, '"')
+      .trim();
+  }
+
+  function ensureArray(config) {
+    if (!config) return [];
+
+    return Array.isArray(config) ? config : [config];
+  }
+
   function parseConfig(element) {
-    const rawConfig = element.getAttribute('data-installments-config');
+    const scriptConfig = element.querySelector('script[data-installments-config]');
+
+    if (scriptConfig) {
+      const scriptValue = scriptConfig.textContent?.trim();
+
+      if (scriptValue) {
+        try {
+          return ensureArray(JSON.parse(scriptValue));
+        } catch (error) {
+          console.warn('Unable to parse installments configuration from script', error);
+        }
+      }
+    }
+
+    const rawConfig = normaliseConfigValue(
+      element.getAttribute('data-installments-config') ||
+        element.dataset.installmentsConfig,
+    );
 
     if (!rawConfig) {
       return [];
     }
 
     try {
-      return JSON.parse(rawConfig);
+      return ensureArray(JSON.parse(rawConfig));
     } catch (error) {
-      console.warn('Unable to parse installments configuration', error);
-      return [];
+      try {
+        return ensureArray(JSON.parse(normaliseConfigValue(rawConfig)));
+      } catch (fallbackError) {
+        console.warn('Unable to parse installments configuration', fallbackError);
+        return [];
+      }
     }
+  }
+
+  function getConfig(element) {
+    if (!element) return [];
+
+    if (!element.__installmentsConfig) {
+      element.__installmentsConfig = parseConfig(element);
+    }
+
+    return element.__installmentsConfig;
   }
 
   function formatMoney(cents, format) {
@@ -35,7 +82,13 @@
     const hideLabel = element.querySelector('[data-installments-toggle-label-hide]');
     const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
 
-    const shouldExpand = typeof expanded === 'boolean' ? expanded : tableWrapper.hasAttribute('hidden');
+    if (!tableWrapper) return;
+
+    const isCurrentlyHidden = tableWrapper.hidden || tableWrapper.hasAttribute('hidden');
+    const shouldExpand =
+      typeof expanded === 'boolean' ? expanded : isCurrentlyHidden;
+
+    tableWrapper.hidden = !shouldExpand;
 
     if (shouldExpand) {
       tableWrapper.removeAttribute('hidden');
@@ -48,7 +101,15 @@
     hideLabel?.toggleAttribute('hidden', !shouldExpand);
   }
 
-  function getSummaryTemplate(element) {
+  function getSummaryTemplate(element, option) {
+    const hasInterest = !!option?.interest;
+    if (hasInterest) {
+      const interestTemplate = element.getAttribute('data-summary-template-interest');
+      if (interestTemplate) {
+        return interestTemplate;
+      }
+    }
+
     return element.getAttribute('data-summary-template') || '';
   }
 
@@ -60,8 +121,7 @@
   }) {
     const summaryText = element.querySelector('[data-installments-summary]');
     const summaryFootnote = element.querySelector('[data-installments-summary-footnote]');
-    const disclaimer = element.querySelector('[data-installments-disclaimer]');
-    const template = getSummaryTemplate(element);
+    const template = getSummaryTemplate(element, option);
 
     if (!summaryText) return;
 
@@ -74,7 +134,22 @@
 
     const shouldShowFootnote = !!option.interest;
     summaryFootnote?.toggleAttribute('hidden', !shouldShowFootnote);
-    disclaimer?.toggleAttribute('hidden', !shouldShowFootnote);
+  }
+
+  function updatePoints(element, price) {
+    const pointsElement = element.querySelector('[data-installments-points]');
+
+    if (!pointsElement) return;
+
+    const template =
+      pointsElement.getAttribute('data-installments-points-template') ||
+      'Pontos: ganhe %points% pontos';
+    const points = Number.isFinite(price) ? Math.floor(Number(price) / 100) : 0;
+    const text = template.includes('%points%')
+      ? template.replace('%points%', points)
+      : template;
+
+    pointsElement.textContent = text;
   }
 
   function createRow({ element, option, perInstallmentValue, moneyFormat, highlight }) {
@@ -95,7 +170,23 @@
 
     const interestSpan = document.createElement('span');
     interestSpan.className = 'installments-table__interest';
-    interestSpan.textContent = option.interest ? interestLabel : noInterestLabel;
+    const fallbackInterestLabel = interestLabel || 'Com juros';
+    const fallbackNoInterestLabel = noInterestLabel || 'Sem juros';
+
+    const interestRate = Number(option.rate);
+    if (option.interest) {
+      const formattedRate = Number.isFinite(interestRate)
+        ? (interestRate * 100).toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : null;
+      const label = interestLabel || fallbackInterestLabel;
+      const rateLabel = formattedRate ? ` (${formattedRate}%)` : '';
+      interestSpan.textContent = `${label}${rateLabel}`.trim() || rateLabel.trim();
+    } else {
+      interestSpan.textContent = fallbackNoInterestLabel;
+    }
     installmentCell.appendChild(interestSpan);
 
     const valueCell = document.createElement('td');
@@ -104,7 +195,7 @@
 
     if (option.interest) {
       const footnote = document.createElement('span');
-      footnote.className = 'installments__summary-footnote';
+      footnote.className = 'installments-table__footnote';
       footnote.textContent = '*';
       valueCell.appendChild(footnote);
     }
@@ -121,7 +212,7 @@
   }
 
   function updateTable(element, price) {
-    const config = parseConfig(element);
+    const config = getConfig(element);
     const tableBody = element.querySelector('[data-installments-table-body]');
     const moneyFormat = element.getAttribute('data-money-format') || '';
     const highlight = element.getAttribute('data-highlight-installment');
@@ -144,14 +235,26 @@
       tableBody.appendChild(row);
     });
 
-    const lastOption = config[config.length - 1];
-    const summaryValue = calculatePerInstallment(price, lastOption);
+    const highlightInstallment = Number(highlight);
+    const summaryOption = Number.isFinite(highlightInstallment)
+      ? config.find((option) => Number(option.count) === highlightInstallment)
+      : undefined;
+    const fallbackOption = config[config.length - 1];
+    const optionForSummary = summaryOption || fallbackOption;
+    const summaryValue = calculatePerInstallment(price, optionForSummary);
+    const disclaimer = element.querySelector('[data-installments-disclaimer]');
+    const hasInterestOption = config.some((installment) => !!installment.interest);
+
     updateSummary({
       element,
-      option: lastOption,
+      option: optionForSummary,
       perInstallmentValue: summaryValue,
       moneyFormat,
     });
+
+    disclaimer?.toggleAttribute('hidden', !hasInterestOption);
+
+    updatePoints(element, price);
   }
 
   function handleVariantChange(element, price) {
@@ -165,7 +268,7 @@
       return;
     }
 
-    const config = parseConfig(element);
+    const config = getConfig(element);
     if (!Array.isArray(config) || !config.length) return;
 
     element.dataset.installmentsInitialized = 'true';
@@ -179,6 +282,7 @@
     const tableHeadingInstallmentsEl = element.querySelector('[data-installments-table-heading-installments]');
     const tableHeadingValueEl = element.querySelector('[data-installments-table-heading-value]');
     const toggleButton = element.querySelector('[data-installments-toggle]');
+    const tableWrapper = element.querySelector('[data-installments-table-wrapper]');
 
     tableHeadingInstallmentsEl && (tableHeadingInstallmentsEl.textContent = tableHeadingInstallments || '');
     tableHeadingValueEl && (tableHeadingValueEl.textContent = tableHeadingValue || '');
@@ -188,6 +292,13 @@
         toggleTable(element);
       });
     }
+
+    const buttonExpanded = toggleButton?.getAttribute('aria-expanded');
+    const initiallyExpanded =
+      buttonExpanded === 'true' ||
+      (tableWrapper && !tableWrapper.hidden && !tableWrapper.hasAttribute('hidden'));
+
+    toggleTable(element, initiallyExpanded);
 
     const sectionId = element.getAttribute('data-section');
 
@@ -212,6 +323,7 @@
     dispose?.();
     activeInstances.delete(element);
     delete element.dataset.installmentsInitialized;
+    delete element.__installmentsConfig;
   }
 
   function initAll(scope = document) {

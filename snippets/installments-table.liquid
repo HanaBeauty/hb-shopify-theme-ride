@@ -1,22 +1,97 @@
-{% assign installment_options = '[{"count":1,"rate":0.0270,"interest":false},{"count":2,"rate":0.0497,"interest":false},{"count":3,"rate":0.0555,"interest":false},{"count":4,"rate":0.0617,"interest":false},{"count":5,"rate":0.0676,"interest":false},{"count":6,"rate":0.0734,"interest":false},{"count":7,"rate":0.0748,"interest":true},{"count":8,"rate":0.0810,"interest":true},{"count":9,"rate":0.0872,"interest":true},{"count":10,"rate":0.0917,"interest":true},{"count":11,"rate":0.0979,"interest":true},{"count":12,"rate":0.1042,"interest":true}]' | parse_json %}
-{% assign highest_option = installment_options | last %}
-{% assign highest_rate_multiplier = highest_option.rate | plus: 1 %}
-{% assign highest_installment_value = product.selected_or_first_available_variant.price | times: highest_rate_multiplier | divided_by: highest_option.count %}
+{% capture installments_config %}
+[
+  {"count": 1, "rate": 0, "interest": false},
+  {"count": 2, "rate": 0, "interest": false},
+  {"count": 3, "rate": 0, "interest": false},
+  {"count": 4, "rate": 0, "interest": false},
+  {"count": 5, "rate": 0, "interest": false},
+  {"count": 6, "rate": 0, "interest": false},
+  {"count": 7, "rate": 0.0748, "interest": true},
+  {"count": 8, "rate": 0.0810, "interest": true},
+  {"count": 9, "rate": 0.0872, "interest": true},
+  {"count": 10, "rate": 0.0917, "interest": true},
+  {"count": 11, "rate": 0.0979, "interest": true},
+  {"count": 12, "rate": 0.1042, "interest": true}
+]
+{% endcapture %}
+{% assign installment_options = installments_config | strip | parse_json %}
+{% assign highlight_installment = 6 %}
+{% assign selected_variant = product.selected_or_first_available_variant %}
+{% assign variant_price = selected_variant.price %}
+{% assign highlight_option = installment_options | where: 'count', highlight_installment | first %}
+{% assign summary_option = highlight_option %}
+{% if summary_option == blank %}
+  {% assign summary_option = installment_options | last %}
+{% endif %}
+{% assign installments_with_interest = installment_options | where: 'interest', true %}
+{% assign has_interest_option = installments_with_interest | size %}
+{% assign summary_installment_count = summary_option.count | default: highlight_installment %}
+{% assign summary_total_price = variant_price %}
+{% if summary_option.interest %}
+  {% assign interest_amount = variant_price | times: summary_option.rate | round: 0 %}
+  {% assign summary_total_price = variant_price | plus: interest_amount %}
+{% endif %}
+{% assign summary_double_total = summary_total_price | times: 2 %}
+{% assign summary_adjusted_total = summary_double_total | plus: summary_installment_count %}
+{% assign summary_double_count = summary_installment_count | times: 2 %}
+{% assign highlight_installment_value = summary_adjusted_total | divided_by: summary_double_count %}
+{% assign reward_points = variant_price | divided_by: 100 | floor %}
+{% capture summary_text %}
+  Parcelas: até {{ summary_installment_count }}x{% if summary_option.interest %} com juros{% else %} sem juros{% endif %} de {{ highlight_installment_value | money }}
+{% endcapture %}
+{% capture installments_table_rows %}
+  {% assign interest_label = 'products.product.installments.with_interest' | t %}
+  {% assign no_interest_label = 'products.product.installments.without_interest' | t %}
+  {% for option in installment_options %}
+    {% assign installment_count = option.count %}
+    {% assign installment_has_interest = option.interest %}
+    {% assign installment_total = variant_price %}
+    {% if installment_has_interest %}
+      {% assign installment_interest = variant_price | times: option.rate | round: 0 %}
+      {% assign installment_total = variant_price | plus: installment_interest %}
+    {% endif %}
+    {% assign installment_double_total = installment_total | times: 2 %}
+    {% assign installment_adjusted_total = installment_double_total | plus: installment_count %}
+    {% assign installment_double_count = installment_count | times: 2 %}
+    {% assign installment_value = installment_adjusted_total | divided_by: installment_double_count %}
+    <tr class="installments-table__row{% if installment_count == highlight_installment %} installments-table__row--highlight{% endif %}">
+      <th scope="row" class="installments-table__installment">
+        {{ installment_count }}x
+        <span class="installments-table__interest">
+          {% if installment_has_interest %}
+            {{ interest_label }}
+          {% else %}
+            {{ no_interest_label }}
+          {% endif %}
+        </span>
+      </th>
+      <td class="installments-table__value">
+        {{ installment_value | money }}
+        {% if installment_has_interest %}
+          <span class="installments-table__footnote">*</span>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+{% endcapture %}
 
 <div
   class="installments"
   data-installments
   data-section="{{ section.id }}"
-  data-initial-price="{{ product.selected_or_first_available_variant.price }}"
-  data-installments-config='{{ installment_options | json | escape }}'
-  data-highlight-installment="6"
-  data-summary-template="{{ 'products.product.installments.summary' | t: count: '%count%', value: '%value%' }}"
+  data-initial-price="{{ variant_price }}"
+  data-highlight-installment="{{ highlight_installment }}"
+  data-summary-template="Parcelas: até %count%x sem juros de %value%"
+  data-summary-template-interest="Parcelas: até %count%x com juros de %value%"
   data-money-format="{{ shop.money_format | escape }}"
   data-interest-label="{{ 'products.product.installments.with_interest' | t }}"
   data-no-interest-label="{{ 'products.product.installments.without_interest' | t }}"
   data-table-heading-installments="{{ 'products.product.installments.table_heading_installments' | t }}"
   data-table-heading-value="{{ 'products.product.installments.table_heading_value' | t }}"
 >
+  <script type="application/json" data-installments-config>
+    {{ installment_options | json }}
+  </script>
   <div class="installments__header">
     <p class="installments__summary" aria-live="polite">
       <span class="installments__summary-icon" aria-hidden="true">
@@ -29,19 +104,19 @@
       </span>
       <span class="visually-hidden">{{ 'products.product.installments.icon_label' | t }}</span>
       <span class="installments__summary-text" data-installments-summary>
-        {{ 'products.product.installments.summary' | t: count: highest_option.count, value: highest_installment_value | money }}
+        {{ summary_text | strip | strip_newlines }}
       </span>
-      <span class="installments__summary-footnote" data-installments-summary-footnote{% unless highest_option.interest %} hidden{% endunless %}>*</span>
+      <span class="installments__summary-footnote" data-installments-summary-footnote{% if summary_option and summary_option.interest %}{% else %} hidden{% endif %}>*</span>
     </p>
     <button
       class="installments__toggle"
       type="button"
       data-installments-toggle
-      aria-expanded="false"
-      aria-controls="InstallmentsTable-{{ section.id }}"
+      aria-expanded="true"
+      aria-controls="InstallmentsTableWrapper-{{ section.id }}"
     >
-      <span data-installments-toggle-label-show>{{ 'products.product.installments.toggle_open' | t }}</span>
-      <span data-installments-toggle-label-hide hidden>{{ 'products.product.installments.toggle_close' | t }}</span>
+      <span data-installments-toggle-label-show hidden>{{ 'products.product.installments.toggle_open' | t }}</span>
+      <span data-installments-toggle-label-hide>{{ 'products.product.installments.toggle_close' | t }}</span>
       <span class="installments__toggle-icon" data-installments-toggle-icon aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" role="presentation" focusable="false">
           <path fill="currentColor" d="m12 15.5-7-7L6.5 7 12 12.5 17.5 7 19 8.5z" />
@@ -50,19 +125,37 @@
     </button>
   </div>
 
-  <div class="installments__table-wrapper" data-installments-table-wrapper hidden>
+  <p
+    class="installments__points"
+    data-installments-points
+    data-installments-points-template="Pontos: ganhe %points% pontos"
+  >
+    Pontos: ganhe {{ reward_points }} pontos
+  </p>
+
+  <div
+    class="installments__table-wrapper"
+    id="InstallmentsTableWrapper-{{ section.id }}"
+    data-installments-table-wrapper
+  >
     <table class="installments-table" id="InstallmentsTable-{{ section.id }}">
       <thead>
         <tr>
-          <th scope="col" data-installments-table-heading-installments></th>
-          <th scope="col" data-installments-table-heading-value></th>
+          <th scope="col" data-installments-table-heading-installments>
+            {{ 'products.product.installments.table_heading_installments' | t }}
+          </th>
+          <th scope="col" data-installments-table-heading-value>
+            {{ 'products.product.installments.table_heading_value' | t }}
+          </th>
         </tr>
       </thead>
-      <tbody data-installments-table-body></tbody>
+      <tbody data-installments-table-body>
+        {{ installments_table_rows | strip }}
+      </tbody>
     </table>
   </div>
 
-  <p class="installments__disclaimer" data-installments-disclaimer{% unless highest_option.interest %} hidden{% endunless %}>
+  <p class="installments__disclaimer" data-installments-disclaimer{% if has_interest_option > 0 %}{% else %} hidden{% endif %}>
     {{ 'products.product.installments.interest_disclaimer' | t }}
   </p>
 </div>
