@@ -305,8 +305,37 @@
   margin-bottom: 0;
 }
 
+.card__heading a {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+}
+
+@supports (-webkit-line-clamp: 2) {
+  .card__heading a {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
 .card__heading:last-child {
   margin-bottom: 0;
+}
+
+@media only screen and (max-width: 749px) {
+  .card__heading {
+    font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.5rem);
+    letter-spacing: 0.02rem;
+    line-height: 1.35;
+  }
+
+  .card--horizontal .card__heading,
+  .card--horizontal .price__container .price-item,
+  .card--horizontal__quick-add {
+    font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.5rem);
+  }
 }
 
 .card--horizontal .card__heading,
