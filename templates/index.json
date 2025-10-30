@@ -1,1 +1,755 @@
-{"sections":{"slideshow_TenFGX":{"type":"slideshow","blocks":{"slide_k3JRLb":{"type":"slide","disabled":true,"settings":{"image":"shopify:\/\/shop_images\/Hana_Beauty_-_Qualidade_Japonesa.png","image_overlay_opacity":0,"heading":"","heading_size":"h1","subheading":"","button_label":"","link":"shopify:\/\/products\/adesivo-tenkyoku-amlash-para-extensao-de-cilios","button_style_secondary":false,"show_text_box":false,"box_align":"middle-center","text_alignment":"center","text_alignment_mobile":"center","color_scheme":"scheme-1"}},"slide_ncnfbU":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/banner-linha-03_resized.png","image_overlay_opacity":0,"heading":"","heading_size":"h1","subheading":"","button_label":"","link":"shopify:\/\/collections\/pincas-profissionais","button_style_secondary":false,"show_text_box":false,"box_align":"middle-center","text_alignment":"center","text_alignment_mobile":"center","color_scheme":"scheme-1"}},"slide_rGPiVd":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/banner-horizontal-01_resized.png","image_overlay_opacity":0,"heading":"","heading_size":"h1","subheading":"","button_label":"","link":"shopify:\/\/collections\/adesivos-e-removedores","button_style_secondary":false,"show_text_box":false,"box_align":"middle-center","text_alignment":"center","text_alignment_mobile":"center","color_scheme":"scheme-1"}},"slide_U7web4":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/Clin-Clean-Amlash_8b987e64-f683-424b-af48-8ae8edc699f4.jpg","image_overlay_opacity":0,"heading":"","heading_size":"h1","subheading":"","button_label":"","link":"shopify:\/\/products\/clin-clean-amlash-para-extensao-de-cilios","button_style_secondary":false,"show_text_box":false,"box_align":"middle-center","text_alignment":"center","text_alignment_mobile":"center","color_scheme":""}},"slide_pbJmtt":{"type":"slide","settings":{"image":"shopify:\/\/shop_images\/banner-linha-02_resized.png","image_overlay_opacity":0,"heading":"","heading_size":"h1","subheading":"","button_label":"","link":"shopify:\/\/products\/adesivo-etil-amlash-para-extensao-de-cilios-5ml","button_style_secondary":false,"show_text_box":false,"box_align":"middle-center","text_alignment":"center","text_alignment_mobile":"center","color_scheme":"scheme-1"}}},"block_order":["slide_k3JRLb","slide_ncnfbU","slide_rGPiVd","slide_U7web4","slide_pbJmtt"],"custom_css":[],"settings":{"layout":"full_bleed","slide_height":"adapt_image","slider_visual":"dots","auto_rotate":true,"change_slides_speed":3,"image_behavior":"none","show_text_below":false,"accessibility_info":""}},"multicolumn_7pizfr":{"type":"multicolumn","blocks":{"column_VcB6BW":{"type":"column","settings":{"title":"<strong>100% Seguro<\/strong>","text":"<p>Seus dados estão seguros conosco.<\/p>","link_label":"","link":"https:\/\/www.hanabeauty.com.br\/policies\/privacy-policy"}},"column_PDUxbe":{"type":"column","settings":{"title":"<strong>Até 6x Sem Juros<\/strong>","text":"<p>Parcele sua compra no cartão sem juros.<\/p>","link_label":"","link":"https:\/\/www.hanabeauty.com.br\/pages\/formas-de-pagamento"}},"column_EzwzCh":{"type":"column","settings":{"title":"<strong>Frete Grátis<\/strong>","text":"<p>Região Sudeste em compras acima de R$ 99,00.<\/p>","link_label":"","link":"https:\/\/www.hanabeauty.com.br\/pages\/frete-entrega"}},"column_MPKb8y":{"type":"column","settings":{"title":"<strong>Clube da Hana<\/strong>","text":"<p>Acumule pontos e ganhe cashback<\/p>","link_label":"","link":"https:\/\/www.hanabeauty.com.br\/pages\/clube-da-hana"}}},"block_order":["column_VcB6BW","column_PDUxbe","column_EzwzCh","column_MPKb8y"],"name":"Multicoluna - Frete - 6x sem juros - Clube da Hana","settings":{"title":"","heading_size":"h2","image_width":"half","image_ratio":"adapt","button_label":"","button_link":"","columns_desktop":4,"column_alignment":"center","background_style":"primary","color_scheme":"scheme-5","columns_mobile":"1","swipe_on_mobile":true,"padding_top":0,"padding_bottom":0}},"featured_collection_JDgWgw":{"type":"featured-collection","name":"Extensão de Cílios","settings":{"collection":"cilios","products_to_show":25,"title":"Produtos Premium para Extensão de Cílios","heading_size":"h1","description":"","show_description":false,"description_style":"body","columns_desktop":3,"enable_desktop_slider":true,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-5","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"image-with-text":{"type":"image-with-text","blocks":{"heading":{"type":"heading","settings":{"heading":"<strong>Os materiais certos constroem o resultado perfeito.<\/strong>","heading_size":"h1"}},"button":{"type":"button","settings":{"button_label":"Ver loja","button_link":"shopify:\/\/collections\/all","button_style_secondary":false}}},"block_order":["heading","button"],"settings":{"image":"shopify:\/\/shop_images\/Hana_Beauty_1.png","height":"adapt","desktop_image_width":"medium","layout":"text_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-1","color_scheme":"scheme-1","padding_top":4,"padding_bottom":4}},"featured_collection_CpqpD3":{"type":"featured-collection","name":"Alongamento de Unhas","settings":{"collection":"unhas","products_to_show":25,"title":"Produtos de alta qualidade para Unhas Artísticas","heading_size":"h1","description":"","show_description":false,"description_style":"body","columns_desktop":3,"enable_desktop_slider":true,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-5","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"image_with_text_M947Jg":{"type":"image-with-text","blocks":{"heading_i8LEUz":{"type":"heading","settings":{"heading":"<strong>Suas clientes satisfeitas e resultados duradouros.<\/strong>","heading_size":"h1"}},"button_3rjUmR":{"type":"button","settings":{"button_label":"Ver loja","button_link":"shopify:\/\/collections\/all","button_style_secondary":false}}},"block_order":["heading_i8LEUz","button_3rjUmR"],"settings":{"image":"shopify:\/\/shop_images\/Hana_Beauty.png","height":"adapt","desktop_image_width":"medium","layout":"image_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-5","color_scheme":"scheme-5","padding_top":4,"padding_bottom":4}},"featured_collection_fx8pCU":{"type":"featured-collection","name":"Pincéis Profissionais","settings":{"collection":"pinceis","products_to_show":25,"title":"Pincéis profissionais de alta precisão","heading_size":"h1","description":"","show_description":false,"description_style":"body","columns_desktop":3,"enable_desktop_slider":true,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-5","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"image_with_text_cFqikj":{"type":"image-with-text","blocks":{"heading_xjPaQ9":{"type":"heading","settings":{"heading":"<strong>Conheça os detalhes do produto preferido das nossas clientes<\/strong>","heading_size":"h1"}},"button_bUBK7K":{"type":"button","settings":{"button_label":"Quero conhecer melhor","button_link":"shopify:\/\/products\/clin-clean-amlash-para-extensao-de-cilios","button_style_secondary":false}}},"block_order":["heading_xjPaQ9","button_bUBK7K"],"settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_12_de_mai._de_2025_19_33_13.png","height":"large","desktop_image_width":"medium","layout":"text_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-5","color_scheme":"scheme-5","padding_top":4,"padding_bottom":4}},"featured_collection_69rXdn":{"type":"featured-collection","name":"Maquiagem | Aerógrafos ","settings":{"collection":"maquiagem","products_to_show":25,"title":"Caneta aerógrafa para profissionais de alta performance","heading_size":"h1","description":"","show_description":false,"description_style":"body","columns_desktop":3,"enable_desktop_slider":true,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-5","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"image_with_text_K4JBMg":{"type":"image-with-text","blocks":{"heading_3mUhMW":{"type":"heading","settings":{"heading":"Encanto da beleza com cílios empoderados","heading_size":"h1"}},"text_WkVqGw":{"type":"text","settings":{"text":"","text_style":"body"}},"button_YcMyKA":{"type":"button","settings":{"button_label":"Ver mais","button_link":"shopify:\/\/collections\/fio-a-fio-classico","button_style_secondary":false}}},"block_order":["heading_3mUhMW","text_WkVqGw","button_YcMyKA"],"name":"t:sections.image-with-text.presets.name","settings":{"image":"shopify:\/\/shop_images\/blue-eyes-getting-makeup-close-up.jpg","height":"adapt","desktop_image_width":"medium","layout":"image_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"top","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-5","color_scheme":"scheme-5","padding_top":36,"padding_bottom":36}},"featured_collection_KCgaCp":{"type":"featured-collection","name":"Ofertas | Promoções","settings":{"collection":"ofertas","products_to_show":25,"title":"Produtos Exclusivos para profissionais de alta performance","heading_size":"h1","description":"","show_description":false,"description_style":"body","columns_desktop":3,"enable_desktop_slider":true,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-5","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"image_with_text_yFc6wG":{"type":"image-with-text","blocks":{"heading_hyz3gC":{"type":"heading","settings":{"heading":"Os melhores fios para suas extensões","heading_size":"h1"}},"text_UfD7aJ":{"type":"text","settings":{"text":"<h3>Fios de alta tecnologia desenvolvido por profissionais experientes para entregar um produtos que faz a diferença no dia a dia da profissional.<\/h3>","text_style":"body"}},"button_qqJXWy":{"type":"button","settings":{"button_label":"Ver mais","button_link":"https:\/\/www.hanabeauty.com.br\/search?q=cilios&options%5Bprefix%5D=last","button_style_secondary":false}}},"block_order":["heading_hyz3gC","text_UfD7aJ","button_qqJXWy"],"name":"Cílios Bikyoku","settings":{"image":"shopify:\/\/shop_images\/banners_banner_1_mobile_58eda7da-cef7-4e98-b728-73947112ebe7.jpg","height":"adapt","desktop_image_width":"medium","layout":"image_first","image_behavior":"none","content_layout":"no-overlap","desktop_content_position":"top","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-5","color_scheme":"scheme-5","padding_top":36,"padding_bottom":36}},"featured_collection_enw9wy":{"type":"featured-collection","name":"Cílios Coloridos","settings":{"collection":"fios-coloridos","products_to_show":25,"title":"Explore sua criatividade com os fios coloridos Amlash","heading_size":"h1","description":"","show_description":false,"description_style":"body","columns_desktop":3,"enable_desktop_slider":true,"full_width":false,"show_view_all":false,"view_all_style":"solid","color_scheme":"scheme-5","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"174888721155a43f1e":{"type":"apps","blocks":{"growave_loyalty_wishlist_block_index_reviews_slider_yzAChU":{"type":"shopify:\/\/apps\/growave-loyalty-wishlist\/blocks\/block.index.ReviewsSlider\/b3d2efbe-110a-4e27-84a8-1f2ed63996a4","settings":{"lowest_rating":"5","images_type":"product_images","only_pinned_reviews":false,"reviews_sequence":"default","custom_css":""}}},"block_order":["growave_loyalty_wishlist_block_index_reviews_slider_yzAChU"],"settings":{"include_margins":true}},"collection_list_Ykkhka":{"type":"collection-list","blocks":{"featured_collection_qhdJiM":{"type":"featured_collection","name":"Cílios","settings":{"collection":"cilios"}},"featured_collection_PRCCRb":{"type":"featured_collection","name":"Unhas","settings":{"collection":"unhas"}},"featured_collection_tCcHQT":{"type":"featured_collection","name":"Higiene ","settings":{"collection":"higiene-e-hidratacao"}},"featured_collection_pxPjMt":{"type":"featured_collection","name":"Maquiagem","settings":{"collection":"maquiagem"}},"featured_collection_R7fmjz":{"type":"featured_collection","name":"Pincéis","settings":{"collection":"pinceis"}}},"block_order":["featured_collection_qhdJiM","featured_collection_PRCCRb","featured_collection_tCcHQT","featured_collection_pxPjMt","featured_collection_R7fmjz"],"settings":{"title":"","heading_size":"h2","image_ratio":"adapt","columns_desktop":5,"color_scheme":"scheme-5","show_view_all":true,"columns_mobile":"2","swipe_on_mobile":true,"padding_top":8,"padding_bottom":8}},"collapsible_content_FQJjjx":{"type":"collapsible-content","blocks":{"collapsible_row_F7VLmW":{"type":"collapsible_row","settings":{"heading":"Qual o prazo de entrega e como acompanhar meu pedido?","icon":"truck","row_content":"<p>O prazo de entrega varia de acordo com a sua localização e a opção de frete escolhida. Assim que seu pedido for enviado, você receberá um código de rastreamento por e-mail para acompanhar a entrega em tempo real.<\/p>","page":"frete-entrega"}},"collapsible_row_nNV3PH":{"type":"collapsible_row","settings":{"heading":"Os produtos são indicados para todos os tipos de pele?","icon":"eye","row_content":"<p>Cada produto possui uma recomendação específica. Na descrição de cada item, informamos para quais tipos de pele ele é mais indicado. Se tiver dúvidas, entre em contato com nosso atendimento!<\/p>","page":"produto-duvidas"}},"collapsible_row_exWwep":{"type":"collapsible_row","settings":{"heading":"Quais são as formas de pagamento disponíveis?","icon":"price_tag","row_content":"<p>Aceitamos pagamentos via cartão de crédito, PIX, boleto bancário e transferência bancária. Parcelamos as compras no cartão de crédito em até 3x vezes sem juros (verifique as condições no checkout).<\/p>","page":"formas-de-pagamento"}},"collapsible_row_VkLCYY":{"type":"collapsible_row","settings":{"heading":"Posso trocar ou devolver um produto caso não me adapte?","icon":"return","row_content":"<p>Entendemos que nem sempre o produto atende às expectativas do profissional. Porém, por questões de segurança, higiene e normas de saúde, a troca ou devolução só será possível se o item estiver lacrado, sem indícios de uso e dentro do prazo legal de arrependimento (sete dias contados a partir do recebimento, no caso de compras online). Como comercializamos produtos de uso profissional, se o lacre estiver violado ou houver qualquer sinal de uso, não podemos aceitar a devolução, salvo em casos de defeito ou divergência comprovada. Se tiver dúvidas ou precisar de mais informações, entre em contato com a nossa equipe de atendimento para avaliarmos o seu caso.<\/p>","page":"trocas-e-devolucoes"}}},"block_order":["collapsible_row_F7VLmW","collapsible_row_nNV3PH","collapsible_row_exWwep","collapsible_row_VkLCYY"],"settings":{"caption":"","heading":"Perguntas Frequentes","heading_size":"h1","heading_alignment":"center","layout":"row","container_color_scheme":"scheme-4","color_scheme":"scheme-5","open_first_collapsible_row":false,"image_ratio":"adapt","desktop_layout":"image_second","padding_top":8,"padding_bottom":8}},"174897879499daa071":{"type":"apps","blocks":{"judge_me_reviews_featured_carousel_WXJ6eU":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/featured_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{"maxwidth":1080}}},"block_order":["judge_me_reviews_featured_carousel_WXJ6eU"],"settings":{"include_margins":true}}},"order":["slideshow_TenFGX","multicolumn_7pizfr","featured_collection_JDgWgw","image-with-text","featured_collection_CpqpD3","image_with_text_M947Jg","featured_collection_fx8pCU","image_with_text_cFqikj","featured_collection_69rXdn","image_with_text_K4JBMg","featured_collection_KCgaCp","image_with_text_yFc6wG","featured_collection_enw9wy","174888721155a43f1e","collection_list_Ykkhka","collapsible_content_FQJjjx","174897879499daa071"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_TenFGX": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_k3JRLb": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Sokkyoku_Amlash.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/adesivo-sokkyoku-amlash-para-extensao-de-cilios-5ml",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_ncnfbU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/banner-linha-03_resized.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/pincas-profissionais",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_rGPiVd": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/banner-horizontal-01_resized.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/adesivos-e-removedores",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        },
+        "slide_U7web4": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Clin-Clean-Amlash_8b987e64-f683-424b-af48-8ae8edc699f4.jpg",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/clin-clean-amlash-para-extensao-de-cilios",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": ""
+          }
+        },
+        "slide_pbJmtt": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/banner-linha-02_resized.png",
+            "image_overlay_opacity": 0,
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/adesivo-etil-amlash-para-extensao-de-cilios-5ml",
+            "button_style_secondary": false,
+            "show_text_box": false,
+            "box_align": "middle-center",
+            "text_alignment": "center",
+            "text_alignment_mobile": "center",
+            "color_scheme": "scheme-1"
+          }
+        }
+      },
+      "block_order": [
+        "slide_k3JRLb",
+        "slide_ncnfbU",
+        "slide_rGPiVd",
+        "slide_U7web4",
+        "slide_pbJmtt"
+      ],
+      "custom_css": [],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "dots",
+        "auto_rotate": true,
+        "change_slides_speed": 3,
+        "image_behavior": "none",
+        "show_text_below": false,
+        "accessibility_info": ""
+      }
+    },
+    "multicolumn_7pizfr": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_VcB6BW": {
+          "type": "column",
+          "settings": {
+            "title": "<strong>100% Seguro</strong>",
+            "text": "<p>Seus dados estão seguros conosco.</p>",
+            "link_label": "",
+            "link": "https://www.hanabeauty.com.br/policies/privacy-policy"
+          }
+        },
+        "column_PDUxbe": {
+          "type": "column",
+          "settings": {
+            "title": "<strong>Até 6x Sem Juros</strong>",
+            "text": "<p>Parcele sua compra no cartão sem juros.</p>",
+            "link_label": "",
+            "link": "https://www.hanabeauty.com.br/pages/formas-de-pagamento"
+          }
+        },
+        "column_EzwzCh": {
+          "type": "column",
+          "settings": {
+            "title": "<strong>Frete Grátis</strong>",
+            "text": "<p>Região Sudeste em compras acima de R$ 99,00.</p>",
+            "link_label": "",
+            "link": "https://www.hanabeauty.com.br/pages/frete-entrega"
+          }
+        },
+        "column_MPKb8y": {
+          "type": "column",
+          "settings": {
+            "title": "<strong>Clube da Hana</strong>",
+            "text": "<p>Acumule pontos e ganhe cashback</p>",
+            "link_label": "",
+            "link": "https://www.hanabeauty.com.br/pages/clube-da-hana"
+          }
+        }
+      },
+      "block_order": [
+        "column_VcB6BW",
+        "column_PDUxbe",
+        "column_EzwzCh",
+        "column_MPKb8y"
+      ],
+      "name": "Multicoluna - Frete - 6x sem juros - Clube da Hana",
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_width": "half",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-5",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "featured_collection_JDgWgw": {
+      "type": "featured-collection",
+      "name": "Extensão de Cílios",
+      "settings": {
+        "collection": "cilios",
+        "products_to_show": 25,
+        "title": "Produtos Premium para Extensão de Cílios",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Os materiais certos constroem o resultado perfeito.</strong>",
+            "heading_size": "h1"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Ver loja",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Hana_Beauty_1.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "featured_collection_CpqpD3": {
+      "type": "featured-collection",
+      "name": "Alongamento de Unhas",
+      "settings": {
+        "collection": "unhas",
+        "products_to_show": 25,
+        "title": "Produtos de alta qualidade para Unhas Artísticas",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "image_with_text_M947Jg": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_i8LEUz": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Suas clientes satisfeitas e resultados duradouros.</strong>",
+            "heading_size": "h1"
+          }
+        },
+        "button_3rjUmR": {
+          "type": "button",
+          "settings": {
+            "button_label": "Ver loja",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_i8LEUz",
+        "button_3rjUmR"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/Hana_Beauty.png",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-5",
+        "color_scheme": "scheme-5",
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "featured_collection_fx8pCU": {
+      "type": "featured-collection",
+      "name": "Pincéis Profissionais",
+      "settings": {
+        "collection": "pinceis",
+        "products_to_show": 25,
+        "title": "Pincéis profissionais de alta precisão",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "image_with_text_cFqikj": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_xjPaQ9": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Conheça os detalhes do produto preferido das nossas clientes</strong>",
+            "heading_size": "h1"
+          }
+        },
+        "button_bUBK7K": {
+          "type": "button",
+          "settings": {
+            "button_label": "Quero conhecer melhor",
+            "button_link": "shopify://products/clin-clean-amlash-para-extensao-de-cilios",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xjPaQ9",
+        "button_bUBK7K"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_12_de_mai._de_2025_19_33_13.png",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-5",
+        "color_scheme": "scheme-5",
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "featured_collection_69rXdn": {
+      "type": "featured-collection",
+      "name": "Maquiagem | Aerógrafos ",
+      "settings": {
+        "collection": "maquiagem",
+        "products_to_show": 25,
+        "title": "Caneta aerógrafa para profissionais de alta performance",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "image_with_text_K4JBMg": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_3mUhMW": {
+          "type": "heading",
+          "settings": {
+            "heading": "Encanto da beleza com cílios empoderados",
+            "heading_size": "h1"
+          }
+        },
+        "text_WkVqGw": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "text_style": "body"
+          }
+        },
+        "button_YcMyKA": {
+          "type": "button",
+          "settings": {
+            "button_label": "Ver mais",
+            "button_link": "shopify://collections/fio-a-fio-classico",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_3mUhMW",
+        "text_WkVqGw",
+        "button_YcMyKA"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/blue-eyes-getting-makeup-close-up.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-5",
+        "color_scheme": "scheme-5",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_KCgaCp": {
+      "type": "featured-collection",
+      "name": "Ofertas | Promoções",
+      "settings": {
+        "collection": "ofertas",
+        "products_to_show": 25,
+        "title": "Produtos Exclusivos para profissionais de alta performance",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "image_with_text_yFc6wG": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_hyz3gC": {
+          "type": "heading",
+          "settings": {
+            "heading": "Os melhores fios para suas extensões",
+            "heading_size": "h1"
+          }
+        },
+        "text_UfD7aJ": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>Fios de alta tecnologia desenvolvido por profissionais experientes para entregar um produtos que faz a diferença no dia a dia da profissional.</h3>",
+            "text_style": "body"
+          }
+        },
+        "button_qqJXWy": {
+          "type": "button",
+          "settings": {
+            "button_label": "Ver mais",
+            "button_link": "https://www.hanabeauty.com.br/search?q=cilios&options%5Bprefix%5D=last",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_hyz3gC",
+        "text_UfD7aJ",
+        "button_qqJXWy"
+      ],
+      "name": "Cílios Bikyoku",
+      "settings": {
+        "image": "shopify://shop_images/banners_banner_1_mobile_58eda7da-cef7-4e98-b728-73947112ebe7.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-5",
+        "color_scheme": "scheme-5",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_collection_enw9wy": {
+      "type": "featured-collection",
+      "name": "Cílios Coloridos",
+      "settings": {
+        "collection": "fios-coloridos",
+        "products_to_show": 25,
+        "title": "Explore sua criatividade com os fios coloridos Amlash",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 3,
+        "enable_desktop_slider": true,
+        "full_width": false,
+        "show_view_all": false,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-5",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "174888721155a43f1e": {
+      "type": "apps",
+      "blocks": {
+        "growave_loyalty_wishlist_block_index_reviews_slider_yzAChU": {
+          "type": "shopify://apps/growave-loyalty-wishlist/blocks/block.index.ReviewsSlider/b3d2efbe-110a-4e27-84a8-1f2ed63996a4",
+          "settings": {
+            "lowest_rating": "5",
+            "images_type": "product_images",
+            "only_pinned_reviews": false,
+            "reviews_sequence": "default",
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "growave_loyalty_wishlist_block_index_reviews_slider_yzAChU"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "collection_list_Ykkhka": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_qhdJiM": {
+          "type": "featured_collection",
+          "name": "Cílios",
+          "settings": {
+            "collection": "cilios"
+          }
+        },
+        "featured_collection_PRCCRb": {
+          "type": "featured_collection",
+          "name": "Unhas",
+          "settings": {
+            "collection": "unhas"
+          }
+        },
+        "featured_collection_tCcHQT": {
+          "type": "featured_collection",
+          "name": "Higiene ",
+          "settings": {
+            "collection": "higiene-e-hidratacao"
+          }
+        },
+        "featured_collection_pxPjMt": {
+          "type": "featured_collection",
+          "name": "Maquiagem",
+          "settings": {
+            "collection": "maquiagem"
+          }
+        },
+        "featured_collection_R7fmjz": {
+          "type": "featured_collection",
+          "name": "Pincéis",
+          "settings": {
+            "collection": "pinceis"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_qhdJiM",
+        "featured_collection_PRCCRb",
+        "featured_collection_tCcHQT",
+        "featured_collection_pxPjMt",
+        "featured_collection_R7fmjz"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_ratio": "adapt",
+        "columns_desktop": 5,
+        "color_scheme": "scheme-5",
+        "show_view_all": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "collapsible_content_FQJjjx": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_F7VLmW": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Qual o prazo de entrega e como acompanhar meu pedido?",
+            "icon": "truck",
+            "row_content": "<p>O prazo de entrega varia de acordo com a sua localização e a opção de frete escolhida. Assim que seu pedido for enviado, você receberá um código de rastreamento por e-mail para acompanhar a entrega em tempo real.</p>",
+            "page": "frete-entrega"
+          }
+        },
+        "collapsible_row_nNV3PH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Os produtos são indicados para todos os tipos de pele?",
+            "icon": "eye",
+            "row_content": "<p>Cada produto possui uma recomendação específica. Na descrição de cada item, informamos para quais tipos de pele ele é mais indicado. Se tiver dúvidas, entre em contato com nosso atendimento!</p>",
+            "page": "produto-duvidas"
+          }
+        },
+        "collapsible_row_exWwep": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Quais são as formas de pagamento disponíveis?",
+            "icon": "price_tag",
+            "row_content": "<p>Aceitamos pagamentos via cartão de crédito, PIX, boleto bancário e transferência bancária. Parcelamos as compras no cartão de crédito em até 3x vezes sem juros (verifique as condições no checkout).</p>",
+            "page": "formas-de-pagamento"
+          }
+        },
+        "collapsible_row_VkLCYY": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Posso trocar ou devolver um produto caso não me adapte?",
+            "icon": "return",
+            "row_content": "<p>Entendemos que nem sempre o produto atende às expectativas do profissional. Porém, por questões de segurança, higiene e normas de saúde, a troca ou devolução só será possível se o item estiver lacrado, sem indícios de uso e dentro do prazo legal de arrependimento (sete dias contados a partir do recebimento, no caso de compras online). Como comercializamos produtos de uso profissional, se o lacre estiver violado ou houver qualquer sinal de uso, não podemos aceitar a devolução, salvo em casos de defeito ou divergência comprovada. Se tiver dúvidas ou precisar de mais informações, entre em contato com a nossa equipe de atendimento para avaliarmos o seu caso.</p>",
+            "page": "trocas-e-devolucoes"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_F7VLmW",
+        "collapsible_row_nNV3PH",
+        "collapsible_row_exWwep",
+        "collapsible_row_VkLCYY"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Perguntas Frequentes",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "container_color_scheme": "scheme-4",
+        "color_scheme": "scheme-5",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "174897879499daa071": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_WXJ6eU": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_WXJ6eU"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "slideshow_TenFGX",
+    "multicolumn_7pizfr",
+    "featured_collection_JDgWgw",
+    "image-with-text",
+    "featured_collection_CpqpD3",
+    "image_with_text_M947Jg",
+    "featured_collection_fx8pCU",
+    "image_with_text_cFqikj",
+    "featured_collection_69rXdn",
+    "image_with_text_K4JBMg",
+    "featured_collection_KCgaCp",
+    "image_with_text_yFc6wG",
+    "featured_collection_enw9wy",
+    "174888721155a43f1e",
+    "collection_list_Ykkhka",
+    "collapsible_content_FQJjjx",
+    "174897879499daa071"
+  ]
+}
