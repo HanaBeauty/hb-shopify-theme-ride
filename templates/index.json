@@ -730,34 +730,6 @@
       "settings": {
         "include_margins": true
       }
-    },
-    "1761933948bb003f85": {
-      "type": "apps",
-      "blocks": {
-        "massy_massy_registration_form_NLU4wU": {
-          "type": "shopify://apps/massy/blocks/massy-registration-form/755249cf-b2d3-401e-a5e9-91307113bce4",
-          "settings": {
-            "form_url_handle": ""
-          }
-        },
-        "growave_loyalty_wishlist_block_index_reviews_slider_rd8gBY": {
-          "type": "shopify://apps/growave-loyalty-wishlist/blocks/block.index.ReviewsSlider/b3d2efbe-110a-4e27-84a8-1f2ed63996a4",
-          "settings": {
-            "lowest_rating": "4",
-            "images_type": "product_images",
-            "only_pinned_reviews": false,
-            "reviews_sequence": "default",
-            "custom_css": ""
-          }
-        }
-      },
-      "block_order": [
-        "massy_massy_registration_form_NLU4wU",
-        "growave_loyalty_wishlist_block_index_reviews_slider_rd8gBY"
-      ],
-      "settings": {
-        "include_margins": true
-      }
     }
   },
   "order": [
@@ -777,7 +749,6 @@
     "174888721155a43f1e",
     "collection_list_Ykkhka",
     "collapsible_content_FQJjjx",
-    "174897879499daa071",
-    "1761933948bb003f85"
+    "174897879499daa071"
   ]
 }
