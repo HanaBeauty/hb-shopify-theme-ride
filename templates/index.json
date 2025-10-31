@@ -581,7 +581,7 @@
           "settings": {
             "lowest_rating": "5",
             "images_type": "product_images",
-            "only_pinned_reviews": false,
+            "only_pinned_reviews": true,
             "reviews_sequence": "default",
             "custom_css": ""
           }
