@@ -730,6 +730,23 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "1761933948bb003f85": {
+      "type": "apps",
+      "blocks": {
+        "massy_massy_registration_form_NLU4wU": {
+          "type": "shopify://apps/massy/blocks/massy-registration-form/755249cf-b2d3-401e-a5e9-91307113bce4",
+          "settings": {
+            "form_url_handle": ""
+          }
+        }
+      },
+      "block_order": [
+        "massy_massy_registration_form_NLU4wU"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
@@ -749,6 +766,7 @@
     "174888721155a43f1e",
     "collection_list_Ykkhka",
     "collapsible_content_FQJjjx",
-    "174897879499daa071"
+    "174897879499daa071",
+    "1761933948bb003f85"
   ]
 }
