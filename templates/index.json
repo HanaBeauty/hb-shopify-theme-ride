@@ -147,7 +147,7 @@
           "type": "column",
           "settings": {
             "title": "<strong>Frete Grátis</strong>",
-            "text": "<p>Região Sudeste em compras acima de R$ 99,00.</p>",
+            "text": "<p>Região Sudeste em compras acima de R$ 199,00.</p>",
             "link_label": "",
             "link": "https://www.hanabeauty.com.br/pages/frete-entrega"
           }
