@@ -190,7 +190,7 @@
       "type": "featured-collection",
       "name": "Extensão de Cílios",
       "settings": {
-        "collection": "cilios",
+        "collection": "extensao-de-cilios",
         "products_to_show": 25,
         "title": "Produtos Premium para Extensão de Cílios",
         "heading_size": "h1",
@@ -601,7 +601,7 @@
           "type": "featured_collection",
           "name": "Cílios",
           "settings": {
-            "collection": "cilios"
+            "collection": "extensao-de-cilios"
           }
         },
         "featured_collection_PRCCRb": {

@@ -1,1 +1,77 @@
-{"sections":{"main":{"type":"main-search","settings":{"columns_desktop":4,"columns_mobile":"2","image_ratio":"portrait","image_shape":"default","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_filtering":true,"filter_type":"drawer","enable_sorting":true,"article_show_date":true,"article_show_author":false,"padding_top":36,"padding_bottom":36}},"collection_list_XGpDGc":{"type":"collection-list","blocks":{"featured_collection_bDKQQw":{"type":"featured_collection","settings":{"collection":"cilios"}},"featured_collection_3gK38e":{"type":"featured_collection","settings":{"collection":"unhas"}},"featured_collection_zQ4NUN":{"type":"featured_collection","settings":{"collection":"ofertas"}}},"block_order":["featured_collection_bDKQQw","featured_collection_3gK38e","featured_collection_zQ4NUN"],"name":"t:sections.collection-list.presets.name","settings":{"title":"Coleções","heading_size":"h1","image_ratio":"square","columns_desktop":3,"color_scheme":"","show_view_all":false,"columns_mobile":"1","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}}},"order":["main","collection_list_XGpDGc"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-search",
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "enable_sorting": true,
+        "article_show_date": true,
+        "article_show_author": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list_XGpDGc": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_bDKQQw": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "extensao-de-cilios"
+          }
+        },
+        "featured_collection_3gK38e": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "unhas"
+          }
+        },
+        "featured_collection_zQ4NUN": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "ofertas"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_bDKQQw",
+        "featured_collection_3gK38e",
+        "featured_collection_zQ4NUN"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Coleções",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "collection_list_XGpDGc"
+  ]
+}
