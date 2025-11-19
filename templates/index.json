@@ -326,7 +326,7 @@
       "type": "featured-collection",
       "name": "Pincéis Profissionais",
       "settings": {
-        "collection": "pinceis",
+        "collection": "pinceis-profissionais",
         "products_to_show": 25,
         "title": "Pincéis profissionais de alta precisão",
         "heading_size": "h1",
@@ -629,7 +629,7 @@
           "type": "featured_collection",
           "name": "Pincéis",
           "settings": {
-            "collection": "pinceis"
+            "collection": "pinceis-profissionais"
           }
         }
       },
