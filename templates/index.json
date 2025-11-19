@@ -258,7 +258,7 @@
       "type": "featured-collection",
       "name": "Alongamento de Unhas",
       "settings": {
-        "collection": "unhas",
+        "collection": "unhas-profissionais",
         "products_to_show": 25,
         "title": "Produtos de alta qualidade para Unhas Artísticas",
         "heading_size": "h1",
@@ -608,7 +608,7 @@
           "type": "featured_collection",
           "name": "Unhas",
           "settings": {
-            "collection": "unhas"
+            "collection": "unhas-profissionais"
           }
         },
         "featured_collection_tCcHQT": {
